@@ -72,7 +72,12 @@ class Admin extends Authenticatable implements HasMedia
     {
         return $this->belongsToMany(Role::class);
     }
+    
 
+    public function permissions()
+    {
+        return $this->hasManyDeepFromRelations($this->roles(), (new Role())->permissions());
+    }
 
 
     public function registerMediaConversions(Media $media = null): void
