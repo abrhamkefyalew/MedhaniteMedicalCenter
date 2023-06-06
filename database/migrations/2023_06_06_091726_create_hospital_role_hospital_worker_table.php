@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hospital_roles', function (Blueprint $table) {
+        Schema::create('hospital_role_hospital_worker', function (Blueprint $table) {
             $table->id()->from(10000);
 
-            $table->string('hospital_role_title')->nullable()->unique();
-            $table->boolean('is_system_created')->default(false);
-            
+            $table->foreignId('hospital_role_id')->constrained('hospital_roles');
+            $table->foreignId('hospital_worker_id')->constrained('hospital_workers');
+            $table->unique(['role_id', 'admin_id']);
+            $table->timestamp('expire_at')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('hospital_roles');
+        Schema::dropIfExists('hospital_role_hospital_worker');
     }
 };
