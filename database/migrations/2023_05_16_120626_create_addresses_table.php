@@ -22,6 +22,9 @@ return new class extends Migration
             $table->string('zip_code')->nullable();
             $table->string('fax')->nullable();
             $table->string('po_box')->nullable();
+            $table->string('relative_location')->nullable();
+            $table->string('latitude')->nullable(); // should they be double  or string
+            $table->string('longitude')->nullable(); // should they be double  or string
             $table->string('phone_number')->nullable();
             $table->string('email')->nullable();
             

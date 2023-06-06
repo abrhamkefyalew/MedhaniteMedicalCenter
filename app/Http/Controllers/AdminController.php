@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use Illuminate\Support\Facades\Http;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
 
@@ -14,6 +15,18 @@ class AdminController extends Controller
     public function index()
     {
         //
+        // $response = Http::withToken('176|KnJ4sbTG8ynrROMCd3rqukyH7bBUA0naeKOMwF5J')->get('http://127.0.0.1:4050/api/v1/admin/admins');
+        // //$response->body();
+
+        // return $response->body();
+
+        //  $response = Http::withToken('176|KnJ4sbTG8ynrROMCd3rqukyH7bBUA0naeKOMwF5J')->get('http://127.0.0.1:4050/api/v1/admin/admins');
+        // // //$response->body();
+
+        //  return $response->body();
+
+        // $response = Http::withToken('176|KnJ4sbTG8ynrROMCd3rqukyH7bBUA0naeKOMwF5J')->get('https://api.linkedin.com/v2/people/(id:{abrham-kefyalew-30466721a})');
+        // return $response->body();
     }
 
     /**
