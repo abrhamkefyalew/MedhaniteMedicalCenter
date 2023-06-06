@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreignId('hospital_role_id')->constrained('hospital_roles');
             $table->foreignId('hospital_worker_id')->constrained('hospital_workers');
-            $table->unique(['role_id', 'admin_id']);
+            $table->unique(['hospital_role_id', 'hospital_worker_id']);
             $table->timestamp('expire_at')->nullable();
 
             $table->timestamps();
