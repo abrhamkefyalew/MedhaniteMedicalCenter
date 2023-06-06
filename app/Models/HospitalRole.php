@@ -19,7 +19,7 @@ class HospitalRole extends Model
     public function hospitalWorkers()
     {
         return $this->belongsToMany(HospitalWorker::class)
-        // ->whereNull('admin_role.deleted_at')
+        // ->whereNull('hospital_role_hospital_worker.deleted_at')
         ->withTimeStamps()
         ->withPivot(['expire_at', 'deleted_at']);
     }

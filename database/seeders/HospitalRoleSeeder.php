@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\HospitalRole;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class HospitalRoleSeeder extends Seeder
 {
@@ -13,5 +14,13 @@ class HospitalRoleSeeder extends Seeder
     public function run(): void
     {
         //
+        $hospitalRoles = [
+            [
+                'hospital_role_title' => HospitalRole::HOSPITAL_ADMIN_ROLE,
+                'is_system_created' => true,
+            ],
+        ];
+
+        HospitalRole::upsert($hospitalRoles, ['hospital_role_title']);
     }
 }

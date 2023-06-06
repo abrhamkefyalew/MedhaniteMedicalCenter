@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->foreignId('hospital_role_id')->constrained('hospital_roles');
             $table->foreignId('hospital_worker_id')->constrained('hospital_workers');
-            $table->unique(['hospital_role_id', 'hospital_worker_id']);
+            $table->unique(['hospital_role_id', 'hospital_worker_id'], 'h_role_h_worker_h_role_id_h_worker_id'); // giving custom index name // should not exceed 64 chars
             $table->timestamp('expire_at')->nullable();
 
             $table->timestamps();
