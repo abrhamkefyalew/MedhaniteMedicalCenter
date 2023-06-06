@@ -20,6 +20,9 @@ class Address extends Model
         'zip_code',
         'fax',
         'po_box',
+        'relative_location',
+        'latitude',
+        'longitude',
         'phone_number',
         'email',
     ];

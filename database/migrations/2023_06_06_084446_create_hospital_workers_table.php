@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('hospital_workers', function (Blueprint $table) {
             $table->id()->from(10000);
 
+            $table->foreignId('hospital_id')->constrained('hospitals');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique();
