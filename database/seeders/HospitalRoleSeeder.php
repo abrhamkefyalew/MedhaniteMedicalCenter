@@ -16,6 +16,10 @@ class HospitalRoleSeeder extends Seeder
         //
         $hospitalRoles = [
             [
+                'hospital_role_title' => HospitalRole::HOSPITAL_ADMIN_ADMIN_ROLE,
+                'is_system_created' => true,
+            ],
+            [
                 'hospital_role_title' => HospitalRole::HOSPITAL_ADMIN_ROLE,
                 'is_system_created' => true,
             ],

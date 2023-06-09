@@ -54,6 +54,7 @@ class PermissionRoleSeeder extends Seeder
                 strpos($permission->title, 'SEND') === false;
         });
 
+        // this will insert (sync) in $role->permission() relation (permission_role table)
         Role::where('title', Role::SUPER_ADMIN_ROLE)->firstOrFail()->permissions()->sync($adminPermissions);
         Role::where('title', Role::MANAGER_ROLE)->firstOrFail()->permissions()->sync($managerPermissions);
         Role::where('title', Role::VIEWER_ROLE)->firstOrFail()->permissions()->sync($viewerPermissions);

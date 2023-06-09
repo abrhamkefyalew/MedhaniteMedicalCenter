@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use App\Notifications\Api\V1\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class HospitalWorker extends Authenticatable implements HasMedia
@@ -85,7 +85,7 @@ class HospitalWorker extends Authenticatable implements HasMedia
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'https://robitalent.com/reset-password/?token='.$token;
+        $url = 'https://medhanite.com/reset-password/?token='.$token;
 
          $this->notify(new ResetPasswordNotification($url));
     }

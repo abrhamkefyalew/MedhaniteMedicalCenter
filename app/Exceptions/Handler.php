@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -25,6 +28,19 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (ValidationException $e, $request) {
+            if ($request->is('api/v1/talent/*')) {
+                Log::alert('Validation exception occurred! Url: ' . $request->url() . ' ' . $e->getMessage(), $e->errors());
+                return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], 422);
+            }
+        });
+
+        $this->renderable(function (NotFoundHttpException $e, $request) {
+            if ($request->is('api/*')) {
+            return response()->json(['message' => 'Record not found or route not found!', /*'ERROR' => $e->getMessage()*/], 404);
+            }
         });
     }
 }
