@@ -28,9 +28,6 @@ class Admin extends Authenticatable implements HasMedia
         'last_name',
         'email',
         'phone_number',
-        'company_name',
-        'job_title',
-        'website_url',
         'is_active',
         'password',
     ];

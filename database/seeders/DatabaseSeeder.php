@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             PermissionRoleSeeder::class,
             // PermissionGroupSeeder::class,
             AdminSeeder::class,
+            HospitalRoleSeeder::class,
         ]);
     }
 }

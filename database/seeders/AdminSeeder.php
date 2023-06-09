@@ -15,14 +15,12 @@ class AdminSeeder extends Seeder
     public function run(): void
     {
         $admin = Admin::firstOrCreate([
-            'id' => 1,
-            'email' => 'medhanite_medical_centers@admin.com',
+            'email' => 'medhanite2@admin.com',
         ], [
-            'first_name' => 'AdminMedCenters',
-            'last_name' => 'AdminMedCenters',
+            'first_name' => 'adminMedCenters',
+            'last_name' => 'adminMedCenters',
+            'phone_number' => '123456789',
             'password' => bcrypt('password'),
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
         $role_id = Role::where('title', Role::SUPER_ADMIN_ROLE)->first('id')->id;

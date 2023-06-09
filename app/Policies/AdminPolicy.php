@@ -3,7 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Admin;
-use App\Models\User;
+use App\Models\Permission;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class AdminPolicy
@@ -14,6 +15,7 @@ class AdminPolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_ADMIN)->exists();
     }
 
     /**
@@ -21,7 +23,7 @@ class AdminPolicy
      */
     public function view(User $user, Admin $admin): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_ADMIN)->exists();
     }
 
     /**

@@ -17,6 +17,7 @@ class Role extends Model
         'title',
     ];
 
+    // abrham comment // ask wossen about meaning of this
     public function admins()
     {
         return $this->belongsToMany(Admin::class)

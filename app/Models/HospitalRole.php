@@ -19,7 +19,7 @@ class HospitalRole extends Model
     public function hospitalWorkers()
     {
         return $this->belongsToMany(HospitalWorker::class)
-        // ->whereNull('admin_role.deleted_at')
+        // ->whereNull('hospital_role_hospital_worker.deleted_at')
         ->withTimeStamps()
         ->withPivot(['expire_at', 'deleted_at']);
     }
@@ -55,8 +55,10 @@ class HospitalRole extends Model
 
 
 
-    public const HOSPITAL_ADMIN_ROLE = 'HOSPITAL_ADMIN'; // can do everything
+    public const HOSPITAL_ADMIN_ADMIN_ROLE = 'HOSPITAL_ADMIN_ADMIN'; // can do everything
+
+    public const HOSPITAL_ADMIN_ROLE = 'HOSPITAL_ADMIN'; // can do everything except delete the HOSPITAL_ADMIN_ADMIN and another HOSPITAL_ADMIN of his type
 
 
-    public const SYSTEM_HOSPITAL_ROLES = [self::HOSPITAL_ADMIN_ROLE]; // abrham comment // please ask frezer or seifu or amen and add other system_hospital_roles if there are any
+    public const SYSTEM_HOSPITAL_ROLES = [self::HOSPITAL_ADMIN_ADMIN_ROLE, self::HOSPITAL_ADMIN_ROLE]; // abrham comment // please ask frezer or seifu or amen and add other system_hospital_roles if there are any
 }
