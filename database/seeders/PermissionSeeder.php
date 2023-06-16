@@ -111,6 +111,42 @@ class PermissionSeeder extends Seeder
                 'title' => Permission::RESTORE_HOSPITAL,
             ],
             [
+                'title' => Permission::INDEX_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::INDEX_HOSPITAL_SPECIALITY,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_SPECIALITY,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_SPECIALITY,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_SPECIALITY,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_SPECIALITY,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_SPECIALITY,
+            ],
+            [
                 'title' => Permission::INDEX_SPECIALITY,
             ],
             [

@@ -3,7 +3,9 @@
 namespace App\Policies;
 
 use App\Models\Hospital;
-use App\Models\User;
+// use App\Models\User;
+use App\Models\Permission;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class HospitalPolicy
@@ -14,6 +16,7 @@ class HospitalPolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_HOSPITAL)->exists();
     }
 
     /**
@@ -22,6 +25,7 @@ class HospitalPolicy
     public function view(User $user, Hospital $hospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_HOSPITAL)->exists();
     }
 
     /**
@@ -30,6 +34,7 @@ class HospitalPolicy
     public function create(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_HOSPITAL)->exists();
     }
 
     /**

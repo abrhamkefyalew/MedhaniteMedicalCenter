@@ -15,7 +15,10 @@ class AdminAuthController extends Controller
 
     public function login(LoginAdminRequest $request)
     {
-        $admin = Admin::with(['permissions', 'address', 'roles'])->where('email', $request->email)->first();
+        // better use load than with, since here after all we get the data , we are checking if the password does match, 
+        // if password does not match all the data and relation and Eager Load is wasted and the data will NOT be returned
+        // do first get only the admin and if the password matches then get the other relations using load()
+        $admin = Admin::with(['permissions', 'address', 'roles', 'media'])->where('email', $request->email)->first(); 
 
         // request()->request->add(['admin-permission-groups' => true]);
 

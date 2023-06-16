@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\HospitalRole;
-use App\Models\User;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class HospitalRolePolicy
@@ -14,6 +15,7 @@ class HospitalRolePolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_HOSPITAL_ROLE)->exists();
     }
 
     /**

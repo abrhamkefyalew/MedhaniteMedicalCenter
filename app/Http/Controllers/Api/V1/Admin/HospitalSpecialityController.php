@@ -2,50 +2,71 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use App\Models\Hospital;
 use App\Models\HospitalSpeciality;
 use App\Http\Controllers\Controller;
+use App\Services\Api\V1\FilteringService;
+use App\Http\Resources\Api\V1\SpecialityResources\SpecialityResource;
 use App\Http\Requests\Api\V1\AdminRequests\StoreHospitalSpecialityRequest;
+use App\Http\Requests\Api\V1\AdminRequests\InvokeHospitalSpecialityRequest;
 use App\Http\Requests\Api\V1\AdminRequests\UpdateHospitalSpecialityRequest;
 
 class HospitalSpecialityController extends Controller
 {
+    
     /**
-     * Display a listing of the resource.
+     * Store, Update and Remove resources in storage.
      */
-    public function index()
+    public function __invoke(InvokeHospitalSpecialityRequest $request, Hospital $hospital)
     {
-        //
-    }
+        $hospital->specialities()->sync($request->speciality_ids);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreHospitalSpecialityRequest $request)
-    {
-        //
-    }
+        $hospitalSpecialities = $hospital->specialities()->paginate(FilteringService::getPaginate($request));
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(HospitalSpeciality $hospitalSpeciality)
-    {
-        //
+        return SpecialityResource::collection($hospitalSpecialities);
     }
+    
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateHospitalSpecialityRequest $request, HospitalSpeciality $hospitalSpeciality)
-    {
-        //
-    }
+    // we should also do index and show below, so the invocable will be replaced by sync
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(HospitalSpeciality $hospitalSpeciality)
-    {
-        //
-    }
+    
+    // /**
+    //  * Store, Update and Remove resources in storage.
+    //  */
+    // public function sync(StoreHospitalSpecialityRequest $request)
+    // {
+    //     //
+    // }
+
+    // /**
+    //  * Store a newly created resource in storage.
+    //  */
+    // public function store(StoreHospitalSpecialityRequest $request)
+    // {
+    //     //
+    // }
+
+    // /**
+    //  * Display the specified resource.
+    //  */
+    // public function show(HospitalSpeciality $hospitalSpeciality)
+    // {
+    //     //
+    // }
+
+    // /**
+    //  * Update the specified resource in storage.
+    //  */
+    // public function update(UpdateHospitalSpecialityRequest $request, HospitalSpeciality $hospitalSpeciality)
+    // {
+    //     //
+    // }
+
+    // /**
+    //  * Remove the specified resource from storage.
+    //  */
+    // public function destroy(HospitalSpeciality $hospitalSpeciality)
+    // {
+    //     //
+    // }
 }

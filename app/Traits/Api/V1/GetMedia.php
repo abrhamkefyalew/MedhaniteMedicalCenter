@@ -16,11 +16,11 @@ trait GetMedia
         return $images;
     }
 
-    public function getOptimizedImagePath()
+    public function getOptimizedImagePath($mediaCollectionName = 'images')
     {
         $image = null;
 
-        if ($image = $this->getMedia('images')->first()) {
+        if ($image = $this->getMedia($mediaCollectionName)->first()) {
             $image = $image->getUrl('optimized');
         }
 

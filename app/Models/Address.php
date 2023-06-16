@@ -27,6 +27,11 @@ class Address extends Model
         'email',
     ];
 
+    protected $casts = [
+        'relative_location' => 'array', // USED
+        // 'relative_location' => 'json', // this works also
+    ];
+
     public function addressable()
     {
         return $this->morphTo();

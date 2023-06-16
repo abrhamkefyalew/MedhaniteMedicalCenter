@@ -34,7 +34,7 @@ class AdminController extends Controller
 
         $this->authorize('viewAny', Admin::class);
 
-        $admin = Admin::whereNotNull('id');
+        $admin = Admin::whereNotNull('id')->with('media', 'roles');
         
         if ($request->has('name')){
             FilteringService::filterByAllNames($request, $admin);
@@ -60,7 +60,7 @@ class AdminController extends Controller
         //
         $this->authorize('view', $admin);
         
-        return AdminResource::make($admin);
+        return AdminResource::make($admin->load(['permissions', 'address', 'roles', 'media']));
     }
 
     /**

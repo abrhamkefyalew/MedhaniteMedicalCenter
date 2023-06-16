@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Traits\Api\V1\GetMedia;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\V1\RoleResources\RoleResource;
+use App\Http\Resources\Api\V1\AddressResources\AddressResource;
 use App\Http\Resources\Api\V1\PermissionResources\PermissionResource;
 
 class AdminResource extends JsonResource
@@ -43,6 +44,7 @@ class AdminResource extends JsonResource
             'phone_number' => $this->phone_number,
             'is_active' => $this->is_active,
             'profile_image_path' => $this->getOptimizedImagePath(),
+            'address' => AddressResource::make($this->whenLoaded('address')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
             'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
             // 'permission_groups' => $this->when($this->includePermissionGroups, function () {

@@ -2,27 +2,26 @@
 
 namespace App\Policies;
 
-use App\Models\Permission;
-use App\Models\Speciality;
+use App\Models\Doctor;
 use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
-class SpecialityPolicy
+class DoctorPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return $user->permissions()->where('permissions.title', Permission::INDEX_SPECIALITY)->exists();
+        //
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Speciality $speciality): bool
+    public function view(User $user, Doctor $doctor): bool
     {
-        return $user->permissions()->where('permissions.title', Permission::SHOW_SPECIALITY)->exists();
+        //
     }
 
     /**
@@ -30,13 +29,13 @@ class SpecialityPolicy
      */
     public function create(User $user): bool
     {
-        return $user->permissions()->where('permissions.title', Permission::CREATE_SPECIALITY)->exists();
+        //
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Speciality $speciality): bool
+    public function update(User $user, Doctor $doctor): bool
     {
         //
     }
@@ -44,7 +43,7 @@ class SpecialityPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Speciality $speciality): bool
+    public function delete(User $user, Doctor $doctor): bool
     {
         //
     }
@@ -52,7 +51,7 @@ class SpecialityPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Speciality $speciality): bool
+    public function restore(User $user, Doctor $doctor): bool
     {
         //
     }
@@ -60,7 +59,7 @@ class SpecialityPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Speciality $speciality): bool
+    public function forceDelete(User $user, Doctor $doctor): bool
     {
         //
     }

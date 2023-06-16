@@ -83,6 +83,11 @@ class HospitalWorker extends Authenticatable implements HasMedia
         return $this->belongsTo(Hospital::class);
     }
 
+    public function hospitalRoles()
+    {
+        return $this->belongsToMany(HospitalRole::class);
+    }
+
     public function sendPasswordResetNotification($token)
     {
         $url = 'https://medhanite.com/reset-password/?token='.$token;
@@ -100,4 +105,7 @@ class HospitalWorker extends Authenticatable implements HasMedia
             ->width(150)
             ->height(150);
     }
+
+    // constants
+    public const PROFILE_PICTURE_HOSPITAL_WORKER_PICTURE = 'PROFILE_PICTURE';
 }
