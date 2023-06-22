@@ -90,7 +90,7 @@ class HospitalWorker extends Authenticatable implements HasMedia
 
     public function sendPasswordResetNotification($token)
     {
-        $url = 'https://medhanite.com/reset-password/?token='.$token;
+        $url = 'https://medhanite.com/hospital-workers/reset-password/?token='.$token; // modify this url // depending on your route
 
          $this->notify(new ResetPasswordNotification($url));
     }

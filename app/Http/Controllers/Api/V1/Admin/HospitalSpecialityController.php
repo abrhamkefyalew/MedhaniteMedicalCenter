@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Hospital;
 use App\Models\HospitalSpeciality;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\FilteringService;
 use App\Http\Resources\Api\V1\SpecialityResources\SpecialityResource;
@@ -15,15 +16,18 @@ class HospitalSpecialityController extends Controller
 {
     
     /**
-     * Store, Update and Remove resources in storage.
+     * Store, Update and Remove resources in storage. // alternative to the sync function but works alone in a controller
      */
     public function __invoke(InvokeHospitalSpecialityRequest $request, Hospital $hospital)
     {
-        $hospital->specialities()->sync($request->speciality_ids);
+        return DB::transaction(function () use ($request, $hospital) {
+            $hospital->specialities()->sync($request->speciality_ids);
 
-        $hospitalSpecialities = $hospital->specialities()->paginate(FilteringService::getPaginate($request));
+            $hospitalSpecialities = $hospital->specialities()->paginate(FilteringService::getPaginate($request));
 
-        return SpecialityResource::collection($hospitalSpecialities);
+            return SpecialityResource::collection($hospitalSpecialities);
+        });
+        
     }
     
 
@@ -31,9 +35,9 @@ class HospitalSpecialityController extends Controller
 
     
     // /**
-    //  * Store, Update and Remove resources in storage.
+    //  * Store, Update and Remove resources in storage. // alternative to the __invoke function but can work with other functions in a controller
     //  */
-    // public function sync(StoreHospitalSpecialityRequest $request)
+    // public function sync(SyncHospitalSpecialityRequest $request)
     // {
     //     //
     // }

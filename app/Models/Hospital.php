@@ -45,6 +45,11 @@ class Hospital extends Model implements HasMedia
         return $this->hasMany(HospitalWorker::class);
     }
 
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
+    }
+
     public function specialities()
     {
         return $this->belongsToMany(Speciality::class);

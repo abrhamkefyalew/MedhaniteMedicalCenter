@@ -20,8 +20,14 @@ class SpecialityController extends Controller
         //
         $this->authorize('viewAny', Speciality::class);
 
-        $speciality = Speciality::paginate(FilteringService::getPaginate($request));
-        
+        if (isset($request['paginate'])) {
+            if ($request['paginate'] == "all"){
+                $speciality = Speciality::get();
+            }
+        } else {
+            $speciality = Speciality::paginate(FilteringService::getPaginate($request));
+        }
+
         // // for the ADMIN and CUSTOMER ONLY: -  if the admin wants we can return only the speciality or the hospitals and doctors that have this speciality 
         // // or USE SCOPE
         // if ($request->has('hospital')){

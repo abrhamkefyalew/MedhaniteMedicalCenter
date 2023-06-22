@@ -115,7 +115,7 @@ class StoreHospitalWithHospitalAdminRequest extends FormRequest
                 'nullable', 'numeric',  Rule::unique('hospital_workers'),
             ],
             'job_title' => [
-                'required', 'string',
+                'sometimes', 'string',
             ],
             'is_active' => [
                 'sometimes', 'nullable', 'boolean',
@@ -139,6 +139,7 @@ class StoreHospitalWithHospitalAdminRequest extends FormRequest
             ],
 
             // since it is Storing Hospital Worker for the first time there is no need to remove any image, so we do NOT need remove_image
+            // // also when doing remove image try to do it for specific collection
             // 'remove_image' => [
             //     'sometimes', 'boolean',
             // ],

@@ -49,7 +49,7 @@ class HospitalController extends Controller
         // 
         return DB::transaction(function () use($request) {
             
-            // dd(json_encode($request->hospital_working_hours));
+            // dump(json_encode($request->hospital_working_hours));
             $hospital = Hospital::create([
                 'hospital_name' => $request['hospital_name'],
                 'hospital_description' => $request['hospital_description'],
@@ -144,7 +144,7 @@ class HospitalController extends Controller
                 MediaService::storeImage($hospitalWorker, $file, $clearMedia, $collectionName);
             }
 
-            return HospitalResource::make($hospital->load('hospitalWorkers', 'media', 'address', 'specialities'));
+            return HospitalResource::make($hospital->load('hospitalWorkers', 'media', 'address', 'specialities', 'doctors'));
 
 
         });
@@ -159,7 +159,7 @@ class HospitalController extends Controller
     {
         //
         $this->authorize('view', $hospital);
-        return HospitalResource::make($hospital->load('hospitalWorkers', 'media', 'address', 'specialities'));
+        return HospitalResource::make($hospital->load('hospitalWorkers', 'media', 'address', 'specialities', 'doctors'));
     }
 
     /**

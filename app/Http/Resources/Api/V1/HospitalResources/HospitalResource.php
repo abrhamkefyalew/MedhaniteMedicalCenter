@@ -6,6 +6,7 @@ use App\Models\Hospital;
 use Illuminate\Http\Request;
 use App\Traits\Api\V1\GetMedia;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Api\V1\DoctorResources\DoctorResource;
 use App\Http\Resources\Api\V1\AddressResources\AddressResource;
 use App\Http\Resources\Api\V1\SpecialityResources\SpecialityResource;
 use App\Http\Resources\Api\V1\HospitalWorkerResources\HospitalWorkerResource;
@@ -21,6 +22,7 @@ class HospitalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for normal_users and other hospital_workers
         return [
             'id' => $this->id,
             'hospital_name' => $this->hospital_name,
@@ -39,10 +41,11 @@ class HospitalResource extends JsonResource
             'hospital_working_hours' => $this->hospital_working_hours,
             'hospital_address' => AddressResource::make($this->whenLoaded('address')),
             // abrham comment
-            // load speciality 
             // load list of equipments
-            // load doctors - (with doctors speciality)
-            'hospital_worker' => HospitalWorkerResource::collection($this->whenLoaded('hospitalWorkers', function () {
+            'hospital_doctors' => DoctorResource::collection($this->whenLoaded('doctors', function () {
+                return $this->doctors->load('address', 'specialities', 'media');
+            })),
+            'hospital_workers' => HospitalWorkerResource::collection($this->whenLoaded('hospitalWorkers', function () {
                 return $this->hospitalWorkers->load('address', 'hospitalRoles', 'media');
             })),
         ];

@@ -33,6 +33,11 @@ class Speciality extends Model
         return $this->belongsToMany(Hospital::class);
     }
 
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class);
+    }
+
     // no job postings in the hospitals yet
 
     public static function boot() {

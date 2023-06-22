@@ -3,9 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Admin\AdminController;
+use App\Http\Controllers\Api\V1\Admin\DoctorController;
 use App\Http\Controllers\Api\V1\Admin\HospitalController;
 use App\Http\Controllers\Api\V1\Admin\SpecialityController;
 use App\Http\Controllers\Api\V1\Admin\HospitalRoleController;
+use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
 
@@ -102,6 +104,27 @@ Route::prefix('v1')->group(function () {
                 //     Route::get('/', [HospitalSpecialityController::class, 'show']);
                 //     Route::put('/', [HospitalSpecialityController::class, 'update']);
                 //     Route::delete('/', [HospitalSpecialityController::class, 'destroy']);
+                // }); 
+            });
+
+            Route::prefix('doctors')->group(function () {
+                Route::post('/{hospital}', [DoctorController::class, 'store']);
+                Route::get('/', [DoctorController::class, 'index']);
+                Route::prefix('/{doctor}')->group(function () {
+                    Route::get('/', [DoctorController::class, 'show']);
+                    Route::put('/', [DoctorController::class, 'update']);
+                    Route::delete('/', [DoctorController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('doctor-specialities')->group(function () {
+                Route::match(['post', 'put'], '/{doctor}', [DoctorSpecialityController::class, 'sync']); // for invoke method
+                // Route::post('/', [DoctorSpecialityController::class, 'store']);
+                Route::get('/', [DoctorSpecialityController::class, 'index']);
+                // Route::prefix('/{doctorSpeciality}')->group(function () {
+                //     Route::get('/', [DoctorSpecialityController::class, 'show']);
+                //     Route::put('/', [DoctorSpecialityController::class, 'update']);
+                //     Route::delete('/', [DoctorSpecialityController::class, 'destroy']);
                 // }); 
             });
 
