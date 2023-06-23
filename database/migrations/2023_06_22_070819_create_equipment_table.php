@@ -19,7 +19,7 @@ return new class extends Migration
             $table->id()->from(10000);
 
             $table->foreignId('equipment_type_id')->constrained('equipment_types');
-            $table->string('name')->unique();
+            $table->string('equipment_name')->unique();
             $table->string('equipment_description')->nullable();
             
             $table->timestamps();
