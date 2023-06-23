@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\EquipmentHospital;
-use App\Http\Requests\StoreEquipmentHospitalRequest;
-use App\Http\Requests\UpdateEquipmentHospitalRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\AdminRequests\StoreEquipmentHospitalRequest;
+use App\Http\Requests\Api\V1\AdminRequests\UpdateEquipmentHospitalRequest;
 
 class EquipmentHospitalController extends Controller
 {

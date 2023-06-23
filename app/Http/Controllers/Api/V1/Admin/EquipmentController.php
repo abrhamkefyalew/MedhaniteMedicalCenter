@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Equipment;
-use App\Http\Requests\StoreEquipmentRequest;
-use App\Http\Requests\UpdateEquipmentRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\AdminRequests\StoreEquipmentRequest;
+use App\Http\Requests\Api\V1\AdminRequests\UpdateEquipmentRequest;
 
 class EquipmentController extends Controller
 {

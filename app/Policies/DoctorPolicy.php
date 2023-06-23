@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Doctor;
+use App\Models\Permission;
 use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
@@ -13,7 +14,7 @@ class DoctorPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_DOCTOR)->exists();
     }
 
     /**
@@ -21,7 +22,7 @@ class DoctorPolicy
      */
     public function view(User $user, Doctor $doctor): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_DOCTOR)->exists();
     }
 
     /**
@@ -29,7 +30,7 @@ class DoctorPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_DOCTOR)->exists();
     }
 
     /**

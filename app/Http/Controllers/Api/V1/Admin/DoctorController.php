@@ -20,7 +20,7 @@ class DoctorController extends Controller
      */
     public function index(Request $request)
     {
-        // do auth here
+        $this->authorize('viewAny', Doctor::class);
         $doctors = Doctor::with('media', 'specialities', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
 
         return DoctorResource::collection($doctors);
@@ -76,7 +76,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor)
     {
-        //
+        $this->authorize('view', $doctor);
         return DoctorResource::make($doctor->load('hospital', 'media', 'address', 'specialities'));
     }
 

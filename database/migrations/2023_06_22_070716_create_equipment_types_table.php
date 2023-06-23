@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('equipment_types', function (Blueprint $table) {
             $table->id()->from(10000);
+
+            $table->string('name')->unique();
+            $table->string('equipment_type_description')->nullable();
+            
             $table->timestamps();
             $table->softDeletes();
         });

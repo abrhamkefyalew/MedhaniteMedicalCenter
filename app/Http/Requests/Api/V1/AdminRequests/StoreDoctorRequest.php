@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use App\Models\Doctor;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -12,7 +13,7 @@ class StoreDoctorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', Doctor::class);
     }
 
     /**
@@ -32,10 +33,10 @@ class StoreDoctorRequest extends FormRequest
                 'required', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             'email' => [
-                'required', 'email', Rule::unique('hospital_workers'),
+                'required', 'email', Rule::unique('doctors'),
             ],
             'phone_number' => [
-                'nullable', 'numeric',  Rule::unique('hospital_workers'),
+                'nullable', 'numeric',  Rule::unique('doctors'),
             ],
             'is_active' => [
                 'sometimes', 'nullable', 'boolean',
