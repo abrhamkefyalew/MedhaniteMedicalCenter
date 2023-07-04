@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateHospitalRequest extends FormRequest
@@ -22,7 +23,78 @@ class UpdateHospitalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // Hospital Info
+            'hospital_name' => [
+                'required', 'string',
+            ],
+            'hospital_description' => [
+                'sometimes', 'string', 'nullable',
+            ],
+            'hospital_email' => [
+                'sometimes', 'email', Rule::unique('hospitals'),
+            ],
+            'hospital_phone_number' => [
+                'sometimes', 'nullable', 'numeric', Rule::unique('hospitals'),
+            ],
+            'hospital_is_active' => [
+                'sometimes', 'nullable', 'boolean',
+            ],
+            'hospital_is_approved' => [
+                'sometimes', 'nullable', 'boolean',
+            ],
+            'hospital_working_hours' => [
+                'sometimes',
+                'array',
+            ],
+            'hospital_working_hours.*' => [
+                'sometimes',
+                'string',
+            ],
+            'hospital_relative_location' => [
+                'sometimes',
+                'array',
+            ],
+            'hospital_relative_location.*' => [
+                'sometimes', 
+                'string',
+            ],
+            'hospital_latitude' => [
+                'sometimes', 'numeric', 'between:-90,90',
+            ],
+            'hospital_longitude' => [
+                'sometimes', 'numeric', 'between:-180,180',
+            ],
+            'hospital_country' => [
+                'sometimes', 'string',
+            ],
+            'hospital_city' => [
+                'sometimes', 'string',
+            ],
+            'hospital_nigd_fikad_image' => [
+                'sometimes',
+                'image',
+                'max:3072',
+            ],
+            'hospital_tin_number_image' => [
+                'sometimes',
+                'image',
+                'max:3072',
+            ],
+            'hospital_tiena_tibeka_image' => [
+                'sometimes',
+                'image',
+                'max:3072',
+            ],
+            'hospital_profile_image' => [
+                'sometimes',
+                'image',
+                'max:3072',
+            ],
+            // since it is Storing Hospital for the first time there is no need to remove any image // so we do NOT need remove_image
+            // and also when removing image, we should also provide the collection to remove only specific collection like, nigd_fikad or tin_number
+            // 'hospital_remove_image' => [
+            //     'sometimes', 'boolean',
+            // ],
         ];
     }
 }

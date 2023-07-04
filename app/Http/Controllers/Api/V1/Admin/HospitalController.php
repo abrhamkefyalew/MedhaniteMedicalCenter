@@ -56,8 +56,8 @@ class HospitalController extends Controller
                 'hospital_email' => $request['hospital_email'],
                 'hospital_phone_number' => $request['hospital_phone_number'],
                 'hospital_working_hours' => $request->hospital_working_hours,
-                'hospital_is_active' => $request['hospital_is_active'],
-                'hospital_is_approved' => $request['hospital_is_approved'],
+                'hospital_is_active' => (int) (isset($request['hospital_is_active']) ? $request['hospital_is_active'] : 1), // this works
+                'hospital_is_approved' => (int) $request->input('hospital_is_approved', 0), // this works also
             ]);
     
             $hospitalWorker = $hospital->hospitalWorkers()->create([
@@ -66,8 +66,8 @@ class HospitalController extends Controller
                 'email' => $request['email'],
                 'phone_number' => $request['phone_number'],
                 'job_title' => $request['job_title'],
-                'is_active' => $request['is_active'],
-                'is_approved' => $request['is_approved'],
+                'is_active' => (int) (isset($request['is_active']) ? $request['is_active'] : 1), // this works
+                'is_approved' => (int) $request->input('is_approved', 0), // this works also
                 'password' => $request['password'],
             ]);
 
