@@ -37,7 +37,7 @@ class PermissionRoleSeeder extends Seeder
         $adminPermissions = Permission::all();
 
         $managerPermissions = $adminPermissions->filter(function ($permission) {
-            return substr($permission->title, 0, 6) != 'DELETE' &&
+            return substr($permission->title, 0, 5) != 'DELETE' &&
                    strpos($permission->title, 'RESTORE') === false &&
                    strpos($permission->title, 'ROLE') === false &&
                    strpos($permission->title, 'PERMISSION') === false &&
@@ -45,10 +45,10 @@ class PermissionRoleSeeder extends Seeder
         });
 
         $viewerPermissions = $adminPermissions->filter(function ($permission) {
-            return substr($permission->title, 0, 6) != 'DELETE' &&
-                substr($permission->title, 0, 4) != 'RESTORE' &&
-                substr($permission->title, 0, 4) != 'EDIT' &&
-                substr($permission->title, 0, 6) != 'CREATE' &&
+            return strpos($permission->title, 'DELETE') === false &&
+                strpos($permission->title, 'RESTORE') === false &&
+                strpos($permission->title, 'EDIT') === false &&
+                strpos($permission->title, 'CREATE') === false &&
                 strpos($permission->title, 'ROLE') === false &&
                 strpos($permission->title, 'PERMISSION') === false &&
                 strpos($permission->title, 'SEND') === false;

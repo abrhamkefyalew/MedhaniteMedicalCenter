@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
+use App\Models\Admin as User;
+use App\Models\Permission;
 use App\Models\HospitalSpeciality;
-use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
 class HospitalSpecialityPolicy
@@ -13,7 +14,7 @@ class HospitalSpecialityPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**
@@ -21,7 +22,7 @@ class HospitalSpecialityPolicy
      */
     public function view(User $user, HospitalSpeciality $hospitalSpeciality): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**
@@ -29,7 +30,7 @@ class HospitalSpecialityPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**

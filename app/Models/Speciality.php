@@ -24,13 +24,16 @@ class Speciality extends Model
 
     protected $table = 'specialities';
 
-    // no specialityType and specialityType relation yet
-
-    // no Speciality with Doctor relation yet
+    // no specialityType and speciality relation yet
 
     public function hospitals()
     {
         return $this->belongsToMany(Hospital::class);
+    }
+
+    public function doctors()
+    {
+        return $this->belongsToMany(Doctor::class);
     }
 
     // no job postings in the hospitals yet

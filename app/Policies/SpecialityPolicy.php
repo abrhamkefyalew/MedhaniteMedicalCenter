@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
+use App\Models\Permission;
 use App\Models\Speciality;
-use App\Models\User;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class SpecialityPolicy
@@ -13,7 +14,7 @@ class SpecialityPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_SPECIALITY)->exists();
     }
 
     /**
@@ -21,7 +22,7 @@ class SpecialityPolicy
      */
     public function view(User $user, Speciality $speciality): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_SPECIALITY)->exists();
     }
 
     /**
@@ -29,7 +30,7 @@ class SpecialityPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_SPECIALITY)->exists();
     }
 
     /**

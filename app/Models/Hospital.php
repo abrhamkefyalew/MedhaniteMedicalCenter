@@ -30,6 +30,11 @@ class Hospital extends Model implements HasMedia
 
     protected $table = 'hospitals';
 
+    protected $casts = [
+        'hospital_working_hours' => 'array', // USED
+        // 'hospital_working_hours' => 'json', // this works also
+    ];
+
     public function address()
     {
         return $this->morphOne(Address::class, 'addressable');
@@ -38,6 +43,11 @@ class Hospital extends Model implements HasMedia
     public function hospitalWorkers()
     {
         return $this->hasMany(HospitalWorker::class);
+    }
+
+    public function doctors()
+    {
+        return $this->hasMany(Doctor::class);
     }
 
     public function specialities()
@@ -56,4 +66,12 @@ class Hospital extends Model implements HasMedia
             ->width(150)
             ->height(150);
     }
+
+    // Declare Constants
+    
+    // Hospital Image Types should be Constants, // ask seife and others for the types of images for the hospital
+    public const PROFILE_PICTURE_HOSPITAL_PICTURE = 'PROFILE_PICTURE';
+    public const NIGD_FIKAD_HOSPITAL_PICTURE = 'NIGD_FIKAD';
+    public const TIN_NUMBER_HOSPITAL_PICTURE = 'TIN_NUMBER';
+    public const TEINA_TIBEKA_HOSPITAL_PICTURE = 'TEINA_TIBEKA';
 }

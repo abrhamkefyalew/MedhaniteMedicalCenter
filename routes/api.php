@@ -3,6 +3,12 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Admin\AdminController;
+use App\Http\Controllers\Api\V1\Admin\DoctorController;
+use App\Http\Controllers\Api\V1\Admin\HospitalController;
+use App\Http\Controllers\Api\V1\Admin\SpecialityController;
+use App\Http\Controllers\Api\V1\Admin\HospitalRoleController;
+use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
+use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
 
 /*
@@ -54,11 +60,75 @@ Route::prefix('v1')->group(function () {
                     Route::get('/', [AdminController::class, 'show']);
                     Route::put('/', [AdminController::class, 'update']);
                     Route::delete('/', [AdminController::class, 'destroy']);
-                });
-                
+                }); 
             });
-        });
 
+            Route::prefix('hospitals')->group(function () {
+                Route::post('/', [HospitalController::class, 'store']);
+                Route::post('/with-hospital-worker-admin-admin', [HospitalController::class, 'storeHospitalWithHospitalAdmin']);
+                Route::get('/', [HospitalController::class, 'index']);
+                Route::prefix('/{hospital}')->group(function () {
+                    Route::get('/', [HospitalController::class, 'show']);
+                    Route::put('/', [HospitalController::class, 'update']);
+                    Route::delete('/', [HospitalController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('hospital-roles')->group(function () {
+                Route::get('/', [HospitalRoleController::class, 'index']);
+                Route::post('/', [HospitalRoleController::class, 'store']);
+                Route::prefix('/{hospitalRole}')->group(function () {
+                    Route::get('/', [HospitalRoleController::class, 'show']);
+                    Route::put('/', [HospitalRoleController::class, 'update']);
+                    Route::delete('/', [HospitalRoleController::class, 'destroy']);
+                    Route::post('/restore', [HospitalRoleController::class, 'restore']);
+                });
+            });
+
+
+            Route::prefix('specialities')->group(function () {
+                Route::post('/', [SpecialityController::class, 'store']);
+                Route::get('/', [SpecialityController::class, 'index']);
+                Route::prefix('/{speciality}')->group(function () {
+                    Route::get('/', [SpecialityController::class, 'show']);
+                    Route::put('/', [SpecialityController::class, 'update']);
+                    Route::delete('/', [SpecialityController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('hospital-specialities')->group(function () {
+                Route::match(['post', 'put'], '/{hospital}', HospitalSpecialityController::class); // for invoke method
+                // Route::post('/', [HospitalSpecialityController::class, 'store']);
+                // Route::get('/', [HospitalSpecialityController::class, 'index']);
+                // Route::prefix('/{hospitalSpeciality}')->group(function () {
+                //     Route::get('/', [HospitalSpecialityController::class, 'show']);
+                //     Route::put('/', [HospitalSpecialityController::class, 'update']);
+                //     Route::delete('/', [HospitalSpecialityController::class, 'destroy']);
+                // }); 
+            });
+
+            Route::prefix('doctors')->group(function () {
+                Route::post('/{hospital}', [DoctorController::class, 'store']);
+                Route::get('/', [DoctorController::class, 'index']);
+                Route::prefix('/{doctor}')->group(function () {
+                    Route::get('/', [DoctorController::class, 'show']);
+                    Route::put('/', [DoctorController::class, 'update']);
+                    Route::delete('/', [DoctorController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('doctor-specialities')->group(function () {
+                Route::match(['post', 'put'], '/{doctor}', [DoctorSpecialityController::class, 'sync']); // for invoke method
+                // Route::post('/', [DoctorSpecialityController::class, 'store']);
+                Route::get('/', [DoctorSpecialityController::class, 'index']);
+                // Route::prefix('/{doctorSpeciality}')->group(function () {
+                //     Route::get('/', [DoctorSpecialityController::class, 'show']);
+                //     Route::put('/', [DoctorSpecialityController::class, 'update']);
+                //     Route::delete('/', [DoctorSpecialityController::class, 'destroy']);
+                // }); 
+            });
+
+        });
     });
     
 
