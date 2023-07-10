@@ -21,7 +21,8 @@ trait GetMedia
         $image = null;
 
         if ($image = $this->getMedia($mediaCollectionName)->first()) {
-            $image = $image->getUrl('optimized');
+            // $image = $image->getUrl('optimized');
+            $image = url($image->getUrl('optimized'));
         }
 
         return $image;
