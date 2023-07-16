@@ -5,9 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Admin\AdminController;
 use App\Http\Controllers\Api\V1\Admin\DoctorController;
 use App\Http\Controllers\Api\V1\Admin\HospitalController;
+use App\Http\Controllers\Api\V1\Admin\EquipmentController;
 use App\Http\Controllers\Api\V1\Admin\SpecialityController;
 use App\Http\Controllers\Api\V1\Admin\HospitalRoleController;
+use App\Http\Controllers\Api\V1\Admin\EquipmentTypeController;
 use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
+use App\Http\Controllers\Api\V1\Admin\EquipmentHospitalController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
 
@@ -118,7 +121,7 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::prefix('doctor-specialities')->group(function () {
-                Route::match(['post', 'put'], '/{doctor}', [DoctorSpecialityController::class, 'sync']); // for invoke method
+                Route::match(['post', 'put'], '/{doctor}', [DoctorSpecialityController::class, 'sync']);
                 // Route::post('/', [DoctorSpecialityController::class, 'store']);
                 Route::get('/', [DoctorSpecialityController::class, 'index']);
                 // Route::prefix('/{doctorSpeciality}')->group(function () {
@@ -127,6 +130,39 @@ Route::prefix('v1')->group(function () {
                 //     Route::delete('/', [DoctorSpecialityController::class, 'destroy']);
                 // }); 
             });
+
+            Route::prefix('equipment_types')->group(function () {
+                Route::post('/', [EquipmentTypeController::class, 'store']);
+                Route::get('/', [EquipmentTypeController::class, 'index']);
+                Route::prefix('/{equipment_type}')->group(function () {
+                    Route::get('/', [EquipmentTypeController::class, 'show']);
+                    Route::put('/', [EquipmentTypeController::class, 'update']);
+                    Route::delete('/', [EquipmentTypeController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('equipments')->group(function () {
+                Route::post('/', [EquipmentController::class, 'store']);
+                Route::get('/', [EquipmentController::class, 'index']);
+                Route::prefix('/{equipment}')->group(function () {
+                    Route::get('/', [EquipmentController::class, 'show']);
+                    Route::put('/', [EquipmentController::class, 'update']);
+                    Route::delete('/', [EquipmentController::class, 'destroy']);
+                }); 
+            });
+
+            Route::prefix('equipment-hospitals')->group(function () {
+                Route::match(['post', 'put'], '/{hospital}', [EquipmentHospitalController::class, 'sync']);
+                // Route::post('/', [EquipmentHospitalController::class, 'store']);
+                Route::get('/', [EquipmentHospitalController::class, 'index']);
+                // Route::prefix('/{equipmentHospital}')->group(function () {
+                //     Route::get('/', [EquipmentHospitalController::class, 'show']);
+                //     Route::put('/', [EquipmentHospitalController::class, 'update']);
+                //     Route::delete('/', [EquipmentHospitalController::class, 'destroy']);
+                // }); 
+            });
+
+            
 
         });
     });

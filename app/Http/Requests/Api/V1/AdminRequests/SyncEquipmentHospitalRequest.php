@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1\AdminRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreEquipmentRequest extends FormRequest
+class SyncEquipmentHospitalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class StoreEquipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // equipment_type_id
-            'equipment_type_id' => 'exists:equipment_types,id',
-            'equipment_name' => ['required', 'string', 'unique:equipment,equipment_name'],
-            'equipment_description' => ['sometimes', 'string'],
+            //
+            'equipment_ids' => 'sometimes|array',
+            'equipment_ids.*' => 'integer|exists:equipment,id',
         ];
     }
 }

@@ -20,6 +20,7 @@ class SpecialityController extends Controller
         //
         $this->authorize('viewAny', Speciality::class);
 
+        // scope should be used here
         if (isset($request['paginate'])) {
             if ($request['paginate'] == "all"){
                 $speciality = Speciality::get();
@@ -50,7 +51,7 @@ class SpecialityController extends Controller
         //
         $speciality = Speciality::create($request->validated());
 
-        // for the admin if the admin wants we can return only the speciality or the hospitals and doctors that have this speciality 
+        // for the admin if the admin wants we can return only the speciality   or the hospitals and doctors that have this speciality 
         return SpecialityResource::make($speciality);
     }
 

@@ -23,6 +23,8 @@ class StoreEquipmentTypeRequest extends FormRequest
     {
         return [
             //
+            'equipment_type_name' => ['required', 'string', 'unique:equipment_types,equipment_type_name'],
+            'equipment_type_description' => ['sometimes', 'string'],
         ];
     }
 }
