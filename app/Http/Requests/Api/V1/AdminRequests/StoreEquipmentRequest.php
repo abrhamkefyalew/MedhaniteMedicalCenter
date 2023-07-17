@@ -22,7 +22,10 @@ class StoreEquipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            // equipment_type_id
+            'equipment_type_id' => 'exists:equipment_types,id',
+            'equipment_name' => ['required', 'string', 'unique:equipment,equipment_name'],
+            'equipment_description' => ['sometimes', 'string'],
         ];
     }
 }

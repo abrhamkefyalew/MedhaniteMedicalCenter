@@ -8,6 +8,7 @@ use App\Traits\Api\V1\GetMedia;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\Api\V1\DoctorResources\DoctorResource;
 use App\Http\Resources\Api\V1\AddressResources\AddressResource;
+use App\Http\Resources\Api\V1\EquipmentResources\EquipmentResource;
 use App\Http\Resources\Api\V1\SpecialityResources\SpecialityResource;
 use App\Http\Resources\Api\V1\HospitalWorkerResources\HospitalWorkerResource;
 
@@ -34,6 +35,7 @@ class HospitalResource extends JsonResource
             'hospital_created_at' => $this->created_at,
             'hospital_updated_at' => $this->updated_at,
             'hospital_specialities' => SpecialityResource::collection($this->whenLoaded('specialities')),
+            // 'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments')),
             'hospital_nigd_fikad_image_path' => $this->getOptimizedImagePath(Hospital::NIGD_FIKAD_HOSPITAL_PICTURE),
             'hospital_tin_number_image_path' => $this->getOptimizedImagePath(Hospital::TIN_NUMBER_HOSPITAL_PICTURE),
             'hospital_tiena_tibeka_image_path' => $this->getOptimizedImagePath(Hospital::TEINA_TIBEKA_HOSPITAL_PICTURE),
@@ -42,6 +44,10 @@ class HospitalResource extends JsonResource
             'hospital_address' => AddressResource::make($this->whenLoaded('address')),
             // abrham comment
             // load list of equipments
+            'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments', function () {
+                return $this->equipments->load('equipmentType');
+            })),
+
             'hospital_doctors' => DoctorResource::collection($this->whenLoaded('doctors', function () {
                 return $this->doctors->load('address', 'specialities', 'media');
             })),

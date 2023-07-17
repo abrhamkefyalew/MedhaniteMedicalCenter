@@ -20,7 +20,7 @@ trait GetMedia
     {
         $image = null;
 
-        if ($image = $this->getMedia($mediaCollectionName)->first()) {
+        if ($image = $this->getMedia($mediaCollectionName)->latest()->first()) {
             // $image = $image->getUrl('optimized');
             $image = url($image->getUrl('optimized'));
         }

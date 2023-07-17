@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
-use App\Models\HospitalWorker;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreHospitalWorkerRequest extends FormRequest
+class SyncEquipmentHospitalRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', HospitalWorker::class);
+        return true;
     }
 
     /**
@@ -24,6 +23,8 @@ class StoreHospitalWorkerRequest extends FormRequest
     {
         return [
             //
+            'equipment_ids' => 'sometimes|array',
+            'equipment_ids.*' => 'integer|exists:equipment,id',
         ];
     }
 }

@@ -25,7 +25,21 @@ class Equipment extends Model
 
     protected $table = 'equipment';
 
+
+
     // equipmentType and equipment relation
+    public function equipmentType()
+    {
+        return $this->belongsTo(EquipmentType::class);
+    }
+
 
     // equipment with Hospital relation
+    public function hospitals()
+    {
+        return $this->belongsToMany(Hospital::class);
+    }
+
+    // do the boot function here when equipment is deleted
+
 }

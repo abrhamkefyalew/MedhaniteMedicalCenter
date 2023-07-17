@@ -55,6 +55,11 @@ class Hospital extends Model implements HasMedia
         return $this->belongsToMany(Speciality::class);
     }
 
+    public function equipments()
+    {
+        return $this->belongsToMany(Equipment::class);
+    }
+
 
     public function registerMediaConversions(Media $media = null): void
     {

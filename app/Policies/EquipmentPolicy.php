@@ -3,7 +3,8 @@
 namespace App\Policies;
 
 use App\Models\Equipment;
-use App\Models\User;
+use App\Models\Permission;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class EquipmentPolicy
@@ -14,6 +15,7 @@ class EquipmentPolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_EQUIPMENT)->exists();
     }
 
     /**
@@ -22,6 +24,7 @@ class EquipmentPolicy
     public function view(User $user, Equipment $equipment): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_EQUIPMENT)->exists();
     }
 
     /**
@@ -30,6 +33,7 @@ class EquipmentPolicy
     public function create(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_EQUIPMENT)->exists();
     }
 
     /**
@@ -38,6 +42,7 @@ class EquipmentPolicy
     public function update(User $user, Equipment $equipment): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_EQUIPMENT)->exists();
     }
 
     /**
@@ -46,6 +51,7 @@ class EquipmentPolicy
     public function delete(User $user, Equipment $equipment): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_EQUIPMENT)->exists();
     }
 
     /**
@@ -54,6 +60,7 @@ class EquipmentPolicy
     public function restore(User $user, Equipment $equipment): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_EQUIPMENT)->exists();
     }
 
     /**

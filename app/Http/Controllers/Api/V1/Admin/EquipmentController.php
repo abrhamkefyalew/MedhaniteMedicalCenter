@@ -3,18 +3,33 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Equipment;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\Api\V1\FilteringService;
 use App\Http\Requests\Api\V1\AdminRequests\StoreEquipmentRequest;
 use App\Http\Requests\Api\V1\AdminRequests\UpdateEquipmentRequest;
+use App\Http\Resources\Api\V1\EquipmentResources\EquipmentResource;
 
 class EquipmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        // do auth here
+
+        // scope should be used here
+        if (isset($request['paginate'])) {
+            if ($request['paginate'] == "all"){
+                $equipmentType = Equipment::get();
+            }
+        } else {
+            $equipmentType = Equipment::with('equipmentType')->paginate(FilteringService::getPaginate($request));
+        }
+
+
+        return EquipmentResource::collection($equipmentType);
     }
 
     /**
@@ -23,6 +38,10 @@ class EquipmentController extends Controller
     public function store(StoreEquipmentRequest $request)
     {
         //
+        $equipment = Equipment::create($request->validated());
+
+        // for the admin if the admin wants we can return only the equipment    or the hospitals that have this equipment 
+        return EquipmentResource::make($equipment);
     }
 
     /**

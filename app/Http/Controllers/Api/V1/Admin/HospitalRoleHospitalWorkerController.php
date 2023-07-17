@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\Admin;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\HospitalRoleHospitalWorker;
 use App\Http\Requests\Api\V1\AdminRequests\StoreHospitalRoleHospitalWorkerRequest;
@@ -23,6 +24,11 @@ class HospitalRoleHospitalWorkerController extends Controller
     public function store(StoreHospitalRoleHospitalWorkerRequest $request)
     {
         //
+        // $var = DB::transaction(function () {
+            
+        // });
+
+        // return $var;
     }
 
     /**
@@ -39,6 +45,11 @@ class HospitalRoleHospitalWorkerController extends Controller
     public function update(UpdateHospitalRoleHospitalWorkerRequest $request, HospitalRoleHospitalWorker $hospitalRoleHospitalWorker)
     {
         //
+        // $var = DB::transaction(function () {
+            
+        // });
+
+        // return $var;
     }
 
     /**

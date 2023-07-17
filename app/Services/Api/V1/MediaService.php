@@ -41,4 +41,12 @@ class MediaService
 
         return $object;
     }
+
+    // CLEAR IMAGES
+    public static function clearImage($object, $clearMedia = false, $mediaCollection)
+    {
+        if ($clearMedia) {
+            $object->clearMediaCollection($mediaCollection);
+        }
+    }
 }
