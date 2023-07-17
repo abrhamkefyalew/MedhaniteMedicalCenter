@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use App\Models\HospitalWorker;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreHospitalWorkerRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreHospitalWorkerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', HospitalWorker::class);
     }
 
     /**

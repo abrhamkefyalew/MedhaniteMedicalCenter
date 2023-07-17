@@ -38,7 +38,7 @@ class DoctorPolicy
      */
     public function update(User $user, Doctor $doctor): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_DOCTOR)->exists();
     }
 
     /**
@@ -46,7 +46,7 @@ class DoctorPolicy
      */
     public function delete(User $user, Doctor $doctor): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_DOCTOR)->exists();
     }
 
     /**
@@ -54,7 +54,7 @@ class DoctorPolicy
      */
     public function restore(User $user, Doctor $doctor): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_DOCTOR)->exists();
     }
 
     /**
@@ -62,6 +62,6 @@ class DoctorPolicy
      */
     public function forceDelete(User $user, Doctor $doctor): bool
     {
-        //
+        // return false;
     }
 }

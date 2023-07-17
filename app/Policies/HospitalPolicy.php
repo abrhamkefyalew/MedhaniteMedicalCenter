@@ -43,6 +43,7 @@ class HospitalPolicy
     public function update(User $user, Hospital $hospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_HOSPITAL)->exists();
     }
 
     /**
@@ -51,6 +52,7 @@ class HospitalPolicy
     public function delete(User $user, Hospital $hospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_HOSPITAL)->exists();
     }
 
     /**
@@ -59,6 +61,7 @@ class HospitalPolicy
     public function restore(User $user, Hospital $hospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_HOSPITAL)->exists();
     }
 
     /**
@@ -66,6 +69,6 @@ class HospitalPolicy
      */
     public function forceDelete(User $user, Hospital $hospital): bool
     {
-        //
+        // return false;
     }
 }

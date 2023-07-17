@@ -12,7 +12,7 @@ class UpdateHospitalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', $this->hospital);
     }
 
     /**
@@ -30,11 +30,11 @@ class UpdateHospitalRequest extends FormRequest
             'hospital_description' => [
                 'sometimes', 'string', 'nullable',
             ],
-            'hospital_email' => [
-                'sometimes', 'email', Rule::unique('hospitals'),
-            ],
+            // 'hospital_email' => [
+            //     'sometimes', 'email', Rule::unique('hospitals'),
+            // ],
             'hospital_phone_number' => [
-                'sometimes', 'nullable', 'numeric', Rule::unique('hospitals'),
+                'sometimes', 'nullable', 'numeric', Rule::unique('hospitals')->ignore($this->user()->id),
             ],
             'hospital_is_active' => [
                 'sometimes', 'nullable', 'boolean',
@@ -90,11 +90,20 @@ class UpdateHospitalRequest extends FormRequest
                 'image',
                 'max:3072',
             ],
-            // since it is Storing Hospital for the first time there is no need to remove any image // so we do NOT need remove_image
-            // and also when removing image, we should also provide the collection to remove only specific collection like, nigd_fikad or tin_number
-            // 'hospital_remove_image' => [
-            //     'sometimes', 'boolean',
-            // ],
+            
+            // and also when removing image, we should also provide the collection to remove only specific collection SEPARATELY, like, nigd_fikad or tin_number
+            'hospital_nigd_fikad_image_remove' => [
+                'sometimes', 'boolean',
+            ],
+            'hospital_tin_number_image_remove' => [
+                'sometimes', 'boolean',
+            ],
+            'hospital_tiena_tibeka_image_remove' => [
+                'sometimes', 'boolean',
+            ],
+            'hospital_profile_image_remove' => [
+                'sometimes', 'boolean',
+            ],
         ];
     }
 }

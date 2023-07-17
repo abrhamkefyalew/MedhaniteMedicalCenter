@@ -44,9 +44,9 @@ class HospitalResource extends JsonResource
             'hospital_address' => AddressResource::make($this->whenLoaded('address')),
             // abrham comment
             // load list of equipments
-            // 'hospital_equipments' => DoctorResource::collection($this->whenLoaded('equipments', function () {
-            //     return $this->doctors->load('equipmentType');
-            // })),
+            'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments', function () {
+                return $this->equipments->load('equipmentType');
+            })),
 
             'hospital_doctors' => DoctorResource::collection($this->whenLoaded('doctors', function () {
                 return $this->doctors->load('address', 'specialities', 'media');
