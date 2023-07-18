@@ -34,7 +34,7 @@ class UpdateHospitalRequest extends FormRequest
             //     'sometimes', 'email', Rule::unique('hospitals'),
             // ],
             'hospital_phone_number' => [
-                'sometimes', 'nullable', 'numeric', Rule::unique('hospitals')->ignore($this->user()->id),
+                'sometimes', 'nullable', 'numeric', Rule::unique('hospitals')->ignore($this->hospital->id),
             ],
             'hospital_is_active' => [
                 'sometimes', 'nullable', 'boolean',
