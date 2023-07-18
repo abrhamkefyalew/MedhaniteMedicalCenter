@@ -25,7 +25,7 @@ class UpdateHospitalRequest extends FormRequest
         return [
             // Hospital Info
             'hospital_name' => [
-                'required', 'string',
+                'sometimes', 'string',
             ],
             'hospital_description' => [
                 'sometimes', 'string', 'nullable',
