@@ -36,7 +36,7 @@ class HospitalResource extends JsonResource
             'hospital_updated_at' => $this->updated_at,
             'hospital_specialities' => SpecialityResource::collection($this->whenLoaded('specialities')),
             // 'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments')),
-            'hospital_nigd_fikad_image_path' => $this->getOptimizedImagePath(Hospital::NIGD_FIKAD_HOSPITAL_PICTURE),
+            'hospital_nigd_fikad_image_path' => $this->getOptimizedImagePath(Hospital::NIGD_FIKAD_HOSPITAL_PICTURE), // abrham comment : - IMAGES USE thumbnails for index and optimized for show (also use the plural methods for show and singular methods for index)
             'hospital_tin_number_image_path' => $this->getOptimizedImagePath(Hospital::TIN_NUMBER_HOSPITAL_PICTURE),
             'hospital_tiena_tibeka_image_path' => $this->getOptimizedImagePath(Hospital::TEINA_TIBEKA_HOSPITAL_PICTURE),
             'hospital_profile_image_path' => $this->getOptimizedImagePath(Hospital::PROFILE_PICTURE_HOSPITAL_PICTURE),

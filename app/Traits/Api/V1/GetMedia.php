@@ -4,11 +4,11 @@ namespace App\Traits\Api\V1;
 
 trait GetMedia
 {
-    public function getOptimizedImagePaths()
+    public function getOptimizedImagePaths($mediaCollectionName = 'images')
     {
         $images = [];
-        if ($this->getMedia('images')) {
-            foreach ($this->getMedia('images')->sortByDesc('created_at') as $media) {
+        if ($this->getMedia($mediaCollectionName)) {
+            foreach ($this->getMedia($mediaCollectionName)->sortByDesc('created_at') as $media) {
                 $images[] = $media->getUrl('optimized');
             }
         }
@@ -20,7 +20,7 @@ trait GetMedia
     {
         $image = null;
 
-        if ($image = $this->getMedia($mediaCollectionName)->latest()->first()) {
+        if ($image = $this->getMedia($mediaCollectionName)->sortByDesc('created_at')->first()) {
             // $image = $image->getUrl('optimized');
             $image = url($image->getUrl('optimized'));
         }
@@ -28,11 +28,11 @@ trait GetMedia
         return $image;
     }
 
-    public function getThumbnailImagePath()
+    public function getThumbnailImagePath($mediaCollectionName = 'images')
     {
         $image = null;
 
-        if ($image = $this->getMedia('images')->first()) {
+        if ($image = $this->getMedia($mediaCollectionName)->first()) {
             if ($image->hasGeneratedConversion('thumb')) {
                 $image = $image->getUrl('thumb');
             }
@@ -41,11 +41,11 @@ trait GetMedia
         return $image;
     }
 
-    public function getThumbnailImagePaths()
+    public function getThumbnailImagePaths($mediaCollectionName = 'images')
     {
         $images = [];
-        if ($this->getMedia('images')) {
-            foreach ($this->getMedia('images')->sortByDesc('created_at') as $media) {
+        if ($this->getMedia($mediaCollectionName)) {
+            foreach ($this->getMedia($mediaCollectionName)->sortByDesc('created_at') as $media) {
                 if ($media->hasGeneratedConversion('thumb')) {
                     $images[] = $media->getUrl('thumb');
                 }
