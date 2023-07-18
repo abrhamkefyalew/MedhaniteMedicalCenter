@@ -264,4 +264,33 @@ class HospitalController extends Controller
         //
         $this->authorize('delete', $hospital);
     }
+
+    /**
+     * method to manage images
+     * 
+     * to delete an image or
+     * 
+     * make 1 of the multiple images DEFAULT from every single collection 
+     * 
+     */
+    public function manageImages(Request $request)
+    {
+        // we need
+        // image id
+        // image collection :- (we get it from the image id)
+        // model ID, : - (we get it from the sanctum TOKEN)
+        // Model &  the Model name [Ex app/Models/ModelName] : - (we get it from the sanctum TOKEN)
+
+        if (isset($request['remove_image'])){
+            // by now you will have the image_id to be removed 
+            // get user_ID and MODEL from token
+            // from the media table
+                // check the user_id  & model with the Image_id
+                // if that image_id is indeed aligns with the user_id & model
+                    // delete the image
+
+            // DELETE THE IMAGE WITH THAT ID
+        }
+
+    }
 }
