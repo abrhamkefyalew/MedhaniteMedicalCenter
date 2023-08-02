@@ -21,7 +21,7 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Doctor::class);
-        $doctors = Doctor::with('media', 'specialities', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
+        $doctors = Doctor::with('media', 'specialities', 'hospitals')->latest()->paginate(FilteringService::getPaginate($request));
 
         return DoctorResource::collection($doctors);
     }
@@ -29,11 +29,11 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDoctorRequest $request, Hospital $hospital)
+    public function store(StoreDoctorRequest $request)
     {
         //
-        return DB::transaction(function () use ($request, $hospital) {
-            $doctor = $hospital->doctors()->create([
+        return DB::transaction(function () use ($request) {
+            $doctor = Doctor::create([
                 'first_name' => $request['first_name'],
                 'last_name' => $request['last_name'],
                 'email' => $request['email'],
@@ -43,8 +43,20 @@ class DoctorController extends Controller
                 'password' => $request['password'],
             ]);
 
-            $doctor->specialities()->sync($request->speciality_ids);
+            
+            if ($request->has('hospital_id') && $request->hospital_id != null)
+            {
+                // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
+                $doctor->hospitals()->attach($request->hospital_id);
+            }
+            
 
+            // do if to see if there are specialities in the request
+            if ($request->has('speciality_ids') && (count($request->speciality_ids) > 0))
+            {
+                $doctor->specialities()->sync($request->speciality_ids);
+            }
+            
             if ($request->has('country') || $request->has('city')) {
                 $doctor->address()->create([
                     'country' => $request->input('country'),
@@ -66,7 +78,7 @@ class DoctorController extends Controller
                 MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
             }
 
-            return DoctorResource::make($doctor->load('hospital', 'media', 'address', 'specialities'));
+            return DoctorResource::make($doctor->load('hospitals', 'media', 'address', 'specialities'));
 
         });
     }
@@ -77,7 +89,7 @@ class DoctorController extends Controller
     public function show(Doctor $doctor)
     {
         $this->authorize('view', $doctor);
-        return DoctorResource::make($doctor->load('hospital', 'media', 'address', 'specialities'));
+        return DoctorResource::make($doctor->load('hospitals', 'media', 'address', 'specialities'));
     }
 
     /**
@@ -86,6 +98,31 @@ class DoctorController extends Controller
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
         //
+        return DB::transaction(function() use($request, $doctor) {
+            $doctor->update($request->validated());
+
+            if ($request->has('country') || $request->has('city')){
+                if ($doctor->address) {
+                    $doctor->address()->update([
+                        'country' => $request->input('country'),
+                        'city' => $request->input('city'),
+                    ]);
+                } else {
+                    $doctor->address()->create([
+                        'country' => $request->input('country'),
+                        'city' => $request->input('city'),
+                    ]);
+                }
+            }
+
+            // update speciality
+
+            // may be update the doctor hospital relation also ?
+
+            // update doctor medical license image
+
+            // update doctor profile image
+        });
     }
 
     /**

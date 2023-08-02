@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\V1\Admin\EquipmentController;
 use App\Http\Controllers\Api\V1\Admin\SpecialityController;
 use App\Http\Controllers\Api\V1\Admin\HospitalRoleController;
 use App\Http\Controllers\Api\V1\Admin\EquipmentTypeController;
+use App\Http\Controllers\Api\V1\Admin\DoctorHospitalController;
 use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
 use App\Http\Controllers\Api\V1\Admin\EquipmentHospitalController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
@@ -111,7 +112,7 @@ Route::prefix('v1')->group(function () {
             });
 
             Route::prefix('doctors')->group(function () {
-                Route::post('/{hospital}', [DoctorController::class, 'store']);
+                Route::post('/', [DoctorController::class, 'store']);
                 Route::get('/', [DoctorController::class, 'index']);
                 Route::prefix('/{doctor}')->group(function () {
                     Route::get('/', [DoctorController::class, 'show']);
@@ -124,6 +125,17 @@ Route::prefix('v1')->group(function () {
                 Route::match(['post', 'put'], '/{doctor}', [DoctorSpecialityController::class, 'sync']);
                 // Route::post('/', [DoctorSpecialityController::class, 'store']);
                 Route::get('/', [DoctorSpecialityController::class, 'index']);
+                // Route::prefix('/{doctorSpeciality}')->group(function () {
+                //     Route::get('/', [DoctorSpecialityController::class, 'show']);
+                //     Route::put('/', [DoctorSpecialityController::class, 'update']);
+                //     Route::delete('/', [DoctorSpecialityController::class, 'destroy']);
+                // }); 
+            });
+
+            Route::prefix('doctor-hospital')->group(function () {
+                Route::match(['post', 'put'], '/{hospital}', [DoctorHospitalController::class, 'sync']);
+                // Route::post('/', [DoctorSpecialityController::class, 'store']);
+                Route::get('/', [DoctorHospitalController::class, 'index']);
                 // Route::prefix('/{doctorSpeciality}')->group(function () {
                 //     Route::get('/', [DoctorSpecialityController::class, 'show']);
                 //     Route::put('/', [DoctorSpecialityController::class, 'update']);
@@ -177,5 +189,12 @@ Route::prefix('v1')->group(function () {
 
 
     // user routes (user Normal = customer)
+    Route::prefix('customer')->group(function () {
+        Route::prefix('')->group(function () {
+            // this is for login sent here by medhanite old
+            Route::post('/login', [AdminAuthController::class, 'testingUserLogin']);
+
+        });
+    });
 
 });

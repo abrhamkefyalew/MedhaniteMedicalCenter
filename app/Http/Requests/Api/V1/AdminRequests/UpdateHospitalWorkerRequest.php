@@ -34,7 +34,7 @@ class UpdateHospitalWorkerRequest extends FormRequest
             //     'required', 'email', Rule::unique('hospital_workers'),
             // ],
             'phone_number' => [
-                'nullable', 'numeric',  Rule::unique('hospital_workers')->ignore($this->user()->id),
+                'nullable', 'numeric',  Rule::unique('hospital_workers')->ignore($this->hospitalWorker->id),
             ],
             'job_title' => [
                 'sometimes', 'string',

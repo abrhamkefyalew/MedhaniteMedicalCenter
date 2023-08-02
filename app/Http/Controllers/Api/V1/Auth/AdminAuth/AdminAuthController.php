@@ -114,4 +114,20 @@ class AdminAuthController extends Controller
         return response()->json(['message' => 'Logout from all devices successful'], 200);
     }
 
+
+    public function testingUserLogin(Request $request)
+    {
+        if ($request)
+        {
+            $phone = $request->phone_number;
+        }
+
+        $newJwtToken = '3|xhkGW3UMA4Hcw3Anf0Ca1uoTPi1EFEiv0i0VUxlG';
+
+        return response()->json([
+            'new_system_token' => $newJwtToken,
+            'user_phone_number___' => $phone
+        ]);
+    }
+
 }

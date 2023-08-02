@@ -193,29 +193,30 @@ class HospitalController extends Controller
 
             // in the medias to make the image defalut the code shall delete the old one and recreate is as the latest
 
-            if ($request->has('hospital_nigd_fikad_image_remove', false)) { // the false is the default,  (if the user inputs value then it can be overridden by the user input)
+            if ($request->input('hospital_nigd_fikad_image_remove', false)) { // the false is the default,  (if the user inputs value then the default(false) can be overridden by the user input)
                 $clearMedia = $request['hospital_nigd_fikad_image_remove'];
                 $collectionName = Hospital::NIGD_FIKAD_HOSPITAL_PICTURE;
                 MediaService::clearImage($hospital, $clearMedia, $collectionName);
             }
 
-            if ($request->has('hospital_tin_number_image_remove', false)) {
+            if ($request->input('hospital_tin_number_image_remove', false)) {
                 $clearMedia = $request['hospital_tin_number_image_remove'];
                 $collectionName = Hospital::TIN_NUMBER_HOSPITAL_PICTURE;
                 MediaService::clearImage($hospital, $clearMedia, $collectionName);
             }
 
-            if ($request->has('hospital_tiena_tibeka_image_remove', false)) {
+            if ($request->input('hospital_tiena_tibeka_image_remove', false)) {
                 $clearMedia = $request['hospital_tiena_tibeka_image_remove'];
                 $collectionName = Hospital::TEINA_TIBEKA_HOSPITAL_PICTURE;
                 MediaService::clearImage($hospital, $clearMedia, $collectionName);
             }
 
-            if ($request->has('hospital_profile_image_remove', false)) {
+            if ($request->input('hospital_profile_image_remove', false)) {
                 $clearMedia = $request['hospital_profile_image_remove'];
                 $collectionName = Hospital::PROFILE_PICTURE_HOSPITAL_PICTURE;
                 MediaService::clearImage($hospital, $clearMedia, $collectionName);
             }
+
 
             // Then UPLOAD The IMAGES
             if ($request->has('hospital_nigd_fikad_image')) {
