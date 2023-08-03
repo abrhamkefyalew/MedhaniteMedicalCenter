@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\MediaService;
 use App\Services\Api\V1\FilteringService;
+use App\Services\Api\V1\Admin\HospitalFilteringService;
 use App\Http\Requests\Api\V1\AdminRequests\StoreHospitalRequest;
 use App\Http\Requests\Api\V1\AdminRequests\UpdateHospitalRequest;
 use App\Http\Resources\Api\V1\HospitalResources\HospitalResource;
@@ -26,10 +27,16 @@ class HospitalController extends Controller
     {
         $this->authorize('viewAny', Hospital::class);
 
-        // abrham comment: - should use with for paginated index data, since load will disable the pagination
-        $hospitals = Hospital::with('media', 'specialities')->latest()->paginate(FilteringService::getPaginate($request));
+        $hospitals = Hospital::whereNotNull('id');
 
-        return HospitalResource::collection($hospitals);
+        if ($request->has('hospital_name_search')){
+            HospitalFilteringService::byHospitalNameAndDescription($request, $hospitals);
+        }
+
+        // abrham comment: - should use with for paginated index data, since load will disable the pagination
+        $hospitalData = $hospitals->with('media', 'specialities')->latest()->paginate(FilteringService::getPaginate($request));
+
+        return HospitalResource::collection($hospitalData);
     }
 
     /**

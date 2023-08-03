@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\MediaService;
 use App\Services\Api\V1\FilteringService;
+use App\Services\Api\V1\Admin\DoctorFilteringService;
 use App\Http\Resources\Api\V1\DoctorResources\DoctorResource;
 use App\Http\Requests\Api\V1\AdminRequests\StoreDoctorRequest;
 use App\Http\Requests\Api\V1\AdminRequests\UpdateDoctorRequest;
@@ -21,9 +22,16 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Doctor::class);
-        $doctors = Doctor::with('media', 'specialities', 'hospitals')->latest()->paginate(FilteringService::getPaginate($request));
 
-        return DoctorResource::collection($doctors);
+        $doctors = Doctor::whereNotNull('id');
+
+        if ($request->has('name')){
+            DoctorFilteringService::byDoctorName($request, $doctors);
+        }
+
+        $doctorData = $doctors->with('media', 'specialities', 'hospitals')->latest()->paginate(FilteringService::getPaginate($request));
+
+        return DoctorResource::collection($doctorData);
     }
 
     /**

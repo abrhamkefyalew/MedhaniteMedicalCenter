@@ -21,7 +21,7 @@ class DoctorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for normal user and Other hospital_workers
+        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for customer (normal user) and Other hospital_workers
         return [
             'id' => $this->id,
             'first_name' => $this->first_name,

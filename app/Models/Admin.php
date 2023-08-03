@@ -18,7 +18,7 @@ class Admin extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes, InteractsWithMedia, HasRelationships;
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>

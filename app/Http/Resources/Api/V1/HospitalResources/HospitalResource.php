@@ -23,7 +23,7 @@ class HospitalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for normal_users and other hospital_workers
+        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for customers (normal users) and other hospital_workers
         return [
             'id' => $this->id,
             'hospital_name' => $this->hospital_name,

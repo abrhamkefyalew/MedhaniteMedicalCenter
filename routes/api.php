@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
 use App\Http\Controllers\Api\V1\Admin\EquipmentHospitalController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
+use App\Http\Controllers\Api\V1\Auth\CustomerAuth\CustomerAuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -188,11 +189,11 @@ Route::prefix('v1')->group(function () {
     // doctors route
 
 
-    // user routes (user Normal = customer)
+    // customer routes (customer = user Normal)
     Route::prefix('customer')->group(function () {
         Route::prefix('')->group(function () {
             // this is for login sent here by medhanite old
-            Route::post('/login', [AdminAuthController::class, 'testingUserLogin']);
+            Route::post('/login', [CustomerAuthController::class, 'testingUserLogin']);
 
         });
     });
