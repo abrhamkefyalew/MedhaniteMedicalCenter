@@ -34,7 +34,7 @@ class HospitalController extends Controller
         }
 
         // abrham comment: - should use with for paginated index data, since load will disable the pagination
-        $hospitalData = $hospitals->with('media', 'specialities')->latest()->paginate(FilteringService::getPaginate($request));
+        $hospitalData = $hospitals->with('media', 'specialities', 'address')->latest()->paginate(FilteringService::getPaginate($request));
 
         return HospitalResource::collection($hospitalData);
     }

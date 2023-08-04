@@ -82,7 +82,7 @@ class HospitalWorkerController extends Controller
             
             if ($request->has('profile_image')) {
                 $file = $request->file('profile_image');
-                $clearMedia = false; // or true // // NO hospital worker image remove, since it is the first time the hospital worker is being stored
+                $clearMedia = false; // or true // // NO hospital worker image remove, since we are uploading now
                 $collectionName = HospitalWorker::PROFILE_PICTURE_HOSPITAL_WORKER_PICTURE;
                 MediaService::storeImage($hospitalWorker, $file, $clearMedia, $collectionName);
             }

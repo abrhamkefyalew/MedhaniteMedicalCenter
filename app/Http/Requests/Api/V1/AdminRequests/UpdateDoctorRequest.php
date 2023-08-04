@@ -24,7 +24,7 @@ class UpdateDoctorRequest extends FormRequest
     {
         return [
             // doctor info
-            // 'hospital_id' => 'integer|exists:hospitals,id', // abrham comment for the future if needed , make this array, to accept multiple hospital ids, so that a doctor register belonging multiple hospitals at once
+            'hospital_id' => 'integer|exists:hospitals,id', // abrham comment for the future if needed , make this array, to accept multiple hospital ids, so that a doctor can register belonging multiple hospitals at once
             'first_name' => [
                 'required', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
@@ -63,11 +63,14 @@ class UpdateDoctorRequest extends FormRequest
                 'max:3072',
             ],
 
-            // since it is Storing Doctor for the first time there is no need to remove any image, so we do NOT need remove_image
-            // also when doing remove image try to do it for specific collection
-            // 'remove_image' => [
-            //     'sometimes', 'boolean',
-            // ],
+            // and also when removing image, we should also provide the collection to remove only specific collection SEPARATELY, like, profile_image or cover_image_remove
+            'profile_image_remove' => [
+                'sometimes', 'boolean',
+            ],
+
+            'doctor_medical_license_image_remove' => [
+                'sometimes', 'boolean',
+            ],
 
             // specialities for the doctor
             'speciality_ids' => 'sometimes|array',

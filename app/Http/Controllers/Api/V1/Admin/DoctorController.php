@@ -124,12 +124,51 @@ class DoctorController extends Controller
             }
 
             // update speciality
+            // do if to see if there are specialities in the request
+            if ($request->has('speciality_ids') && (count($request->speciality_ids) > 0))
+            {
+                $doctor->specialities()->sync($request->speciality_ids);
+            }
 
             // may be update the doctor hospital relation also ?
+            if ($request->has('hospital_id') && $request->hospital_id != null)
+            {
+                // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
+                $doctor->hospitals()->sync($request->hospital_id);
+            }
+            
 
-            // update doctor medical license image
+            // remove doctor profile image
+            if ($request->has('profile_image_remove', false)) {
+                $clearMedia = $request['profile_image_remove'];; // or true // // NO image remove, since it is the first time the doctor is being stored
+                $collectionName = Doctor::PROFILE_PICTURE_DOCTOR_PICTURE;
+                MediaService::clearImage($doctor, $clearMedia, $collectionName);
+            }
 
             // update doctor profile image
+            if ($request->has('profile_image')) {
+                $file = $request->file('profile_image');
+                $clearMedia = false; // or true // // NO image remove,  since we are uploading now
+                $collectionName = Doctor::PROFILE_PICTURE_DOCTOR_PICTURE;
+                MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
+            }
+
+            // remove doctor medical license image
+            if($request->has('doctor_medical_license_image_remove', false)){
+                $clearMedia = $request['doctor_medical_license_image_remove'];
+                $collectionName = Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE;
+                MediaService::clearImage($doctor, $clearMedia, $collectionName);
+            }
+
+            // update doctor medical license image
+            if ($request->has('doctor_medical_license_image')) {
+                $file = $request->file('doctor_medical_license_image');
+                $clearMedia = false; // or true // // NO image remove,  since we are uploading now
+                $collectionName = Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE;
+                MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
+            }
+
+            
         });
     }
 
