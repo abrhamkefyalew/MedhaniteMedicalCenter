@@ -193,7 +193,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('customer')->group(function () {
         Route::prefix('')->group(function () {
             // this is for login sent here by medhanite old
-            Route::post('/login', [CustomerAuthController::class, 'testingUserLogin']);
+            Route::post('/login', [CustomerAuthController::class, 'customerLoginTest']);
+            Route::post('/login-test-two', [CustomerAuthController::class, 'testingUserLogin']);
 
         });
     });

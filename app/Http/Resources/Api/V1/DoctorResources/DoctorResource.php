@@ -36,7 +36,7 @@ class DoctorResource extends JsonResource
             'profile_image_path' => $this->getOptimizedImagePath(Doctor::PROFILE_PICTURE_DOCTOR_PICTURE),
             'doctor_medical_license_image_path' => $this->getOptimizedImagePath(Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE),
             'address' => AddressResource::make($this->whenLoaded('address')),
-            'hospital' => HospitalResource::collection($this->whenLoaded('hospitals', function () {
+            'hospitals' => HospitalResource::collection($this->whenLoaded('hospitals', function () {
                 return $this->hospitals->load('address', 'media', 'specialities'); // include speciality, equipments, and doctors for the future (abrham comment)
             })), // this also works
             //'hospital' => new HospitalResource($this->hospital), // this also works
