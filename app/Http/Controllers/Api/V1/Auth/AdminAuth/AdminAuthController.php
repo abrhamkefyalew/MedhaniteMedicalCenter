@@ -65,7 +65,7 @@ class AdminAuthController extends Controller
 
         // WE CAN RETURN
         // 
-        // return $request->user()->tokens()->get(); // gets all of this user token information from all other device sessions ALL of his active sessions (all this user tokens fromm the table) // Works but does not return the personal access TOKEN
+        // return $request->user()->tokens()->get(); // gets all of this user token information from all other device sessions ALL of his active sessions (all this user tokens fromm the table) // Works but does not return the actual personal access TOKEN
         //
         // return $request->user();
         // return request()->user();
@@ -76,7 +76,7 @@ class AdminAuthController extends Controller
         // return auth()->user()->id;
         // return auth()->user()->email;
         //
-        // return $request->user()->currentAccessToken(); // gets all the token information BUT the only current token (this session) // Works but does not return the personal access TOKEN
+        // return $request->user()->currentAccessToken(); // gets all the token information BUT the only current token (this session) // Works but does not return the actual personal access TOKEN
         // return $request->user()->currentAccessToken()->id // only the current token id;
 
 
@@ -96,7 +96,7 @@ class AdminAuthController extends Controller
         // return $request->user()->currentAccessToken()->accessToken; // gets the access token  // Example 2 - DOES NOT WORK
 
 
-        // return $request->user()->currentAccessToken(); // gets all the token information // Works but does not return the personal access TOKEN
+        // return $request->user()->currentAccessToken(); // gets all the token information // Works but does not return the actual personal access TOKEN
 
         // return $request->user()->currentAccessToken()->id;
 
@@ -113,5 +113,22 @@ class AdminAuthController extends Controller
 
         return response()->json(['message' => 'Logout from all devices successful'], 200);
     }
+
+
+    // delete this method or delete this function // abrham comment
+    // public function testingUserLogin(Request $request)
+    // {
+    //     if ($request)
+    //     {
+    //         $phone = $request->phone_number;
+    //     }
+
+    //     $newJwtToken = '3|xhkGW3UMA4Hcw3Anf0Ca1uoTPi1EFEiv0i0VUxlG';
+
+    //     return response()->json([
+    //         'new_system_token' => $newJwtToken,
+    //         'user_phone_number___' => $phone
+    //     ]);
+    // }
 
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api\V1\DoctorResources;
+namespace App\Http\Resources\Api\V1\CustomerResources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DoctorForNormalUsersResource extends JsonResource
+class CustomerForMedhaniteOldResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,7 +14,6 @@ class DoctorForNormalUsersResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this resource is only for the normal users
         return parent::toArray($request);
     }
 }

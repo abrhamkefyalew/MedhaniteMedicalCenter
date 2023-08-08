@@ -24,7 +24,6 @@ class Doctor extends Authenticatable implements HasMedia
      * @var array<int, string>
      */
     protected $fillable = [
-        'hospital_id',
         'first_name',
         'last_name',
         'email',
@@ -77,9 +76,9 @@ class Doctor extends Authenticatable implements HasMedia
         return $this->morphOne(Address::class, 'addressable');
     }
 
-    public function hospital()
+    public function hospitals()
     {
-        return $this->belongsTo(Hospital::class);
+        return $this->belongsToMany(Hospital::class);
     }
 
     public function specialities()

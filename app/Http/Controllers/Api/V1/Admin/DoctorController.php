@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\MediaService;
 use App\Services\Api\V1\FilteringService;
+use App\Services\Api\V1\Admin\DoctorFilteringService;
 use App\Http\Resources\Api\V1\DoctorResources\DoctorResource;
 use App\Http\Requests\Api\V1\AdminRequests\StoreDoctorRequest;
 use App\Http\Requests\Api\V1\AdminRequests\UpdateDoctorRequest;
@@ -21,19 +22,26 @@ class DoctorController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', Doctor::class);
-        $doctors = Doctor::with('media', 'specialities', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
 
-        return DoctorResource::collection($doctors);
+        $doctors = Doctor::whereNotNull('id');
+
+        if ($request->has('name')){
+            DoctorFilteringService::byDoctorName($request, $doctors);
+        }
+
+        $doctorData = $doctors->with('media', 'specialities', 'hospitals')->latest()->paginate(FilteringService::getPaginate($request));
+
+        return DoctorResource::collection($doctorData);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDoctorRequest $request, Hospital $hospital)
+    public function store(StoreDoctorRequest $request)
     {
         //
-        return DB::transaction(function () use ($request, $hospital) {
-            $doctor = $hospital->doctors()->create([
+        return DB::transaction(function () use ($request) {
+            $doctor = Doctor::create([
                 'first_name' => $request['first_name'],
                 'last_name' => $request['last_name'],
                 'email' => $request['email'],
@@ -43,8 +51,20 @@ class DoctorController extends Controller
                 'password' => $request['password'],
             ]);
 
-            $doctor->specialities()->sync($request->speciality_ids);
+            
+            if ($request->has('hospital_id') && $request->hospital_id != null)
+            {
+                // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
+                $doctor->hospitals()->attach($request->hospital_id);
+            }
+            
 
+            // do if to see if there are specialities in the request
+            if ($request->has('speciality_ids') && (count($request->speciality_ids) > 0))
+            {
+                $doctor->specialities()->sync($request->speciality_ids);
+            }
+            
             if ($request->has('country') || $request->has('city')) {
                 $doctor->address()->create([
                     'country' => $request->input('country'),
@@ -66,7 +86,7 @@ class DoctorController extends Controller
                 MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
             }
 
-            return DoctorResource::make($doctor->load('hospital', 'media', 'address', 'specialities'));
+            return DoctorResource::make($doctor->load('hospitals', 'media', 'address', 'specialities'));
 
         });
     }
@@ -77,7 +97,7 @@ class DoctorController extends Controller
     public function show(Doctor $doctor)
     {
         $this->authorize('view', $doctor);
-        return DoctorResource::make($doctor->load('hospital', 'media', 'address', 'specialities'));
+        return DoctorResource::make($doctor->load('hospitals', 'media', 'address', 'specialities'));
     }
 
     /**
@@ -86,6 +106,70 @@ class DoctorController extends Controller
     public function update(UpdateDoctorRequest $request, Doctor $doctor)
     {
         //
+        return DB::transaction(function() use($request, $doctor) {
+            $doctor->update($request->validated());
+
+            if ($request->has('country') || $request->has('city')){
+                if ($doctor->address) {
+                    $doctor->address()->update([
+                        'country' => $request->input('country'),
+                        'city' => $request->input('city'),
+                    ]);
+                } else {
+                    $doctor->address()->create([
+                        'country' => $request->input('country'),
+                        'city' => $request->input('city'),
+                    ]);
+                }
+            }
+
+            // update speciality
+            // do if to see if there are specialities in the request
+            if ($request->has('speciality_ids') && (count($request->speciality_ids) > 0))
+            {
+                $doctor->specialities()->sync($request->speciality_ids);
+            }
+
+            // may be update the doctor hospital relation also ?
+            if ($request->has('hospital_id') && $request->hospital_id != null)
+            {
+                // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
+                $doctor->hospitals()->sync($request->hospital_id);
+            }
+            
+
+            // remove doctor profile image
+            if ($request->has('profile_image_remove', false)) {
+                $clearMedia = $request['profile_image_remove'];; // or true // // NO image remove, since it is the first time the doctor is being stored
+                $collectionName = Doctor::PROFILE_PICTURE_DOCTOR_PICTURE;
+                MediaService::clearImage($doctor, $clearMedia, $collectionName);
+            }
+
+            // update doctor profile image
+            if ($request->has('profile_image')) {
+                $file = $request->file('profile_image');
+                $clearMedia = false; // or true // // NO image remove,  since we are uploading now
+                $collectionName = Doctor::PROFILE_PICTURE_DOCTOR_PICTURE;
+                MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
+            }
+
+            // remove doctor medical license image
+            if($request->has('doctor_medical_license_image_remove', false)){
+                $clearMedia = $request['doctor_medical_license_image_remove'];
+                $collectionName = Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE;
+                MediaService::clearImage($doctor, $clearMedia, $collectionName);
+            }
+
+            // update doctor medical license image
+            if ($request->has('doctor_medical_license_image')) {
+                $file = $request->file('doctor_medical_license_image');
+                $clearMedia = false; // or true // // NO image remove,  since we are uploading now
+                $collectionName = Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE;
+                MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
+            }
+
+            
+        });
     }
 
     /**

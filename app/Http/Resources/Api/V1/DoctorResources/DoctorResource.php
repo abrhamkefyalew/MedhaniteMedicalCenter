@@ -21,10 +21,9 @@ class DoctorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for normal user and Other hospital_workers
+        // this resource is only for the super_admin, hospital_admin_admin, hospital_admin NOT for customer (normal user) and Other hospital_workers
         return [
             'id' => $this->id,
-            'hospital_id' => $this->hospital_id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'email' => $this->email,
@@ -37,8 +36,8 @@ class DoctorResource extends JsonResource
             'profile_image_path' => $this->getOptimizedImagePath(Doctor::PROFILE_PICTURE_DOCTOR_PICTURE),
             'doctor_medical_license_image_path' => $this->getOptimizedImagePath(Doctor::MEDICAL_LICENSE_DOCTOR_PICTURE),
             'address' => AddressResource::make($this->whenLoaded('address')),
-            'hospital' => HospitalResource::make($this->whenLoaded('hospital', function () {
-                return $this->hospital->load('address', 'media', 'specialities'); // include speciality, equipments, and doctors for the future (abrham comment)
+            'hospitals' => HospitalResource::collection($this->whenLoaded('hospitals', function () {
+                return $this->hospitals->load('address', 'media', 'specialities'); // include speciality, equipments, and doctors for the future (abrham comment)
             })), // this also works
             //'hospital' => new HospitalResource($this->hospital), // this also works
         ];

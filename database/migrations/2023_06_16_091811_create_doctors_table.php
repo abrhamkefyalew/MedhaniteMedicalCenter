@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id()->from(10000);
 
-            $table->foreignId('hospital_id')->constrained('hospitals');
+            // $table->foreignId('hospital_id')->nullable()->constrained('hospitals'); // this is the CORRECT way to create constrained with other chain of methods // the method constrained() must be last
             $table->string('first_name');
             $table->string('last_name');
             $table->string('email')->unique(); // hidden from normal Users
