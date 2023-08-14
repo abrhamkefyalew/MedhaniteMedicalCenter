@@ -25,13 +25,13 @@ class UpdateHospitalWorkerRequest extends FormRequest
         return [
             //
             'first_name' => [
-                'required', 'string', 'regex:/^\S*$/u', 'alpha',
+                'sometimes', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             'last_name' => [
-                'required', 'string', 'regex:/^\S*$/u', 'alpha',
+                'sometimes', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             // 'email' => [
-            //     'required', 'email', Rule::unique('hospital_workers'),
+            //     'sometimes', 'email', Rule::unique('hospital_workers'),
             // ],
             'phone_number' => [
                 'nullable', 'numeric',  Rule::unique('hospital_workers')->ignore($this->hospitalWorker->id),
@@ -46,7 +46,7 @@ class UpdateHospitalWorkerRequest extends FormRequest
                 'sometimes', 'nullable', 'boolean',
             ],
             // 'password' => [
-            //     'required', 'min:8', 'confirmed',
+            //     'sometimes', 'min:8', 'confirmed',
             // ],
             'country' => [
                 'sometimes', 'string',
@@ -68,7 +68,7 @@ class UpdateHospitalWorkerRequest extends FormRequest
             // while updating hospital worker roles a person should not update his own role, 
             // the hospital worker admin admin only should update other hospital worker roles but NOT his own
             // the medhanite super admin can change any hospital workers role (but NOT recommended)
-            'hospital_worker_role_ids' => 'required|array',
+            'hospital_worker_role_ids' => 'sometimes|array',
             'hospital_worker_role_ids.*' => 'exists:hospital_roles,id',
         ];
     }
