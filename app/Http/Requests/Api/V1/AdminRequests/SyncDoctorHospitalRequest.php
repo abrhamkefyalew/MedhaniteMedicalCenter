@@ -24,7 +24,7 @@ class SyncDoctorHospitalRequest extends FormRequest
         return [
             //
             'doctor_ids' => 'sometimes|array',
-            'doctor_ids.*' => 'integer|exists:specialities,id',
+            'doctor_ids.*' => 'integer|exists:doctors,id',
         ];
     }
 }

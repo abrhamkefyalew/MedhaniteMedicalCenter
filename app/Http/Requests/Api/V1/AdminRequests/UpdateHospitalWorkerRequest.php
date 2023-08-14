@@ -45,9 +45,9 @@ class UpdateHospitalWorkerRequest extends FormRequest
             'is_approved' => [
                 'sometimes', 'nullable', 'boolean',
             ],
-            'password' => [
-                'required', 'min:8', 'confirmed',
-            ],
+            // 'password' => [
+            //     'required', 'min:8', 'confirmed',
+            // ],
             'country' => [
                 'sometimes', 'string',
             ],

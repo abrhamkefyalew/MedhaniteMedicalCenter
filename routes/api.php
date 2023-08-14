@@ -10,11 +10,14 @@ use App\Http\Controllers\Api\V1\Admin\SpecialityController;
 use App\Http\Controllers\Api\V1\Admin\HospitalRoleController;
 use App\Http\Controllers\Api\V1\Admin\EquipmentTypeController;
 use App\Http\Controllers\Api\V1\Admin\DoctorHospitalController;
+use App\Http\Controllers\Api\V1\Admin\HospitalWorkerController;
 use App\Http\Controllers\Api\V1\Admin\DoctorSpecialityController;
 use App\Http\Controllers\Api\V1\Admin\EquipmentHospitalController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
 use App\Http\Controllers\Api\V1\Auth\CustomerAuth\CustomerAuthController;
+use App\Http\Controllers\Api\V1\Customer\DoctorController as CustomerDoctorController;
+use App\Http\Controllers\Api\V1\Customer\HospitalController as CustomerHospitalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +115,16 @@ Route::prefix('v1')->group(function () {
                 // }); 
             });
 
+            Route::prefix('hospital_workers')->group(function () {
+                Route::post('/', [HospitalWorkerController::class, 'store']);
+                Route::get('/', [HospitalWorkerController::class, 'index']);
+                Route::prefix('/{hospitalWorker}')->group(function () {
+                    Route::get('/', [HospitalWorkerController::class, 'show']);
+                    Route::put('/', [HospitalWorkerController::class, 'update']);
+                    Route::delete('/', [HospitalWorkerController::class, 'destroy']);
+                }); 
+            });
+
             Route::prefix('doctors')->group(function () {
                 Route::post('/', [DoctorController::class, 'store']);
                 Route::get('/', [DoctorController::class, 'index']);
@@ -133,6 +146,7 @@ Route::prefix('v1')->group(function () {
                 // }); 
             });
 
+            // for single hospital adding multiple doctors
             Route::prefix('doctor-hospital')->group(function () {
                 Route::match(['post', 'put'], '/{hospital}', [DoctorHospitalController::class, 'sync']);
                 // Route::post('/', [DoctorSpecialityController::class, 'store']);
@@ -147,7 +161,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('equipment_types')->group(function () {
                 Route::post('/', [EquipmentTypeController::class, 'store']);
                 Route::get('/', [EquipmentTypeController::class, 'index']);
-                Route::prefix('/{equipment_type}')->group(function () {
+                Route::prefix('/{equipmentType}')->group(function () {
                     Route::get('/', [EquipmentTypeController::class, 'show']);
                     Route::put('/', [EquipmentTypeController::class, 'update']);
                     Route::delete('/', [EquipmentTypeController::class, 'destroy']);
@@ -197,6 +211,27 @@ Route::prefix('v1')->group(function () {
             Route::post('/login-test-two', [CustomerAuthController::class, 'testingUserLogin']);
 
         });
+        
+        Route::middleware(['auth:sanctum', 'abilities:access-customer'])->group(function () {
+            // do customer LogOut here if needed
+
+            // other customer routes
+            Route::prefix('hospitals')->group(function (){
+                Route::get('/',[CustomerHospitalController::class, 'index']);
+                Route::prefix('{hospital}')->group(function (){
+                    Route::get('/', [CustomerHospitalController::class, 'show']);
+                });
+            });
+
+            Route::prefix('doctors')->group(function (){
+                Route::get('/',[CustomerDoctorController::class, 'index']);
+                Route::prefix('{doctor}')->group(function (){
+                    Route::get('/', [CustomerDoctorController::class, 'show']);
+                });
+            });
+
+        });
+
     });
 
 });

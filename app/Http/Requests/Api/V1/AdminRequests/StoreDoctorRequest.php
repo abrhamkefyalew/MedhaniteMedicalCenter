@@ -26,7 +26,6 @@ class StoreDoctorRequest extends FormRequest
         return [
             //
             // doctor Info
-            'hospital_id' => 'integer|exists:hospitals,id', // abrham comment for the future if needed , make this array, to accept multiple hospital ids, so that a doctor can register belonging multiple hospitals at once
             'first_name' => [
                 'required', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
@@ -70,6 +69,10 @@ class StoreDoctorRequest extends FormRequest
             // 'remove_image' => [
             //     'sometimes', 'boolean',
             // ],
+
+            // for doctor hospitals
+            'hospital_ids' => 'sometimes|array',
+            'hospital_ids.*' => 'integer|exists:hospitals,id',
 
             // specialities for the doctor
             'speciality_ids' => 'sometimes|array',
