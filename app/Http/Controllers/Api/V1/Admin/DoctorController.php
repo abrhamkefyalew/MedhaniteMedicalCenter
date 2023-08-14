@@ -52,10 +52,10 @@ class DoctorController extends Controller
             ]);
 
             
-            if ($request->has('hospital_id') && $request->hospital_id != null)
+            if ($request->has('hospital_ids') && (count($request->hospital_ids) > 0))
             {
                 // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
-                $doctor->hospitals()->attach($request->hospital_id);
+                $doctor->hospitals()->attach($request->hospital_ids);
             }
             
 
@@ -124,17 +124,16 @@ class DoctorController extends Controller
             }
 
             // update speciality
-            // do if to see if there are specialities in the request
+            // check if there are specialities in the request
             if ($request->has('speciality_ids') && (count($request->speciality_ids) > 0))
             {
                 $doctor->specialities()->sync($request->speciality_ids);
             }
 
-            // may be update the doctor hospital relation also ?
-            if ($request->has('hospital_id') && $request->hospital_id != null)
+            // update doctor hospital relation
+            if ($request->has('hospital_ids') && (count($request->hospital_ids) > 0))
             {
-                // we should use attach NOT sync since it is the FiRST Time a doctor is attached to a hospital
-                $doctor->hospitals()->sync($request->hospital_id);
+                $doctor->hospitals()->sync($request->hospital_ids);
             }
             
 
@@ -168,6 +167,7 @@ class DoctorController extends Controller
                 MediaService::storeImage($doctor, $file, $clearMedia, $collectionName);
             }
 
+            return DoctorResource::make($doctor->load('hospitals', 'media', 'address', 'specialities'));
             
         });
     }

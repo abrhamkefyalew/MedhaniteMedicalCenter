@@ -37,6 +37,7 @@ class CustomerAuthController extends Controller
             // Check if the customer exists in the database
             $customer = Customer::where('phone_number', $phoneNumber)->where('is_approved', 1)->first();
 
+            //// CUSTOMER Does NOT EXIST - CREATE
             if (!$customer) {
                 // check is the customer is dis-approved (dis approved)
                 $customerCheck = Customer::where('phone_number', $phoneNumber)->first();
@@ -50,17 +51,19 @@ class CustomerAuthController extends Controller
                 // customer does not exist, create a new customer with the provided phone number and with approved=1
                 $customer = Customer::create([
                     'phone_number' => $phoneNumber,
+                    'is_active' => 1,
                     'is_approved' => 1,
                 ]);
             }
 
+            //// CUSTOMER EXISTs - LOGIN 
             // we should delete all the previous remaining tokens of the user before he log in every time and then give him one new token
             // the customer can have only one token at a time in the database
             $customer->tokens()->delete();     // delete all other tokens of this customer
 
             // Generate a new token for the user with the access-client ability
             $tokenResult = $customer->createToken('Personal Access Token', ['access-customer']);
-            $newJwtToken = $tokenResult->plainTextToken;
+            // $newJwtToken = $tokenResult->plainTextToken; //
 
             // RETURN TYPE 1
             // Return the new system JWT token to the old Medhanite

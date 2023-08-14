@@ -24,16 +24,12 @@ class UpdateDoctorRequest extends FormRequest
     {
         return [
             // doctor info
-            'hospital_id' => 'integer|exists:hospitals,id', // abrham comment for the future if needed , make this array, to accept multiple hospital ids, so that a doctor can register belonging multiple hospitals at once
             'first_name' => [
                 'required', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             'last_name' => [
                 'required', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
-            // 'email' => [
-            //     'required', 'email', Rule::unique('doctors'),
-            // ],
             'phone_number' => [
                 'nullable', 'numeric',  Rule::unique('doctors')->ignore($this->doctor->id),
             ],
@@ -43,9 +39,9 @@ class UpdateDoctorRequest extends FormRequest
             'is_approved' => [
                 'sometimes', 'nullable', 'boolean',
             ],
-            'password' => [
-                'required', 'min:8', 'confirmed',
-            ],
+            // 'password' => [
+            //     'required', 'min:8', 'confirmed',
+            // ],
             'country' => [
                 'sometimes', 'string',
             ],
@@ -71,6 +67,10 @@ class UpdateDoctorRequest extends FormRequest
             'doctor_medical_license_image_remove' => [
                 'sometimes', 'boolean',
             ],
+
+            // for doctor hospitals
+            'hospital_ids' => 'sometimes|array',
+            'hospital_ids.*' => 'integer|exists:hospitals,id',
 
             // specialities for the doctor
             'speciality_ids' => 'sometimes|array',

@@ -20,7 +20,8 @@ class HospitalWorkerController extends Controller
     public function index(Request $request)
     {
         $this->authorize('viewAny', HospitalWorker::class);
-        $doctors = HospitalWorker::with('media', 'specialities', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
+
+        $doctors = HospitalWorker::with('media', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
  
         return HospitalWorkerResource::collection($doctors);
 
