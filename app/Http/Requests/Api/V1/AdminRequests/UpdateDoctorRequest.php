@@ -25,10 +25,10 @@ class UpdateDoctorRequest extends FormRequest
         return [
             // doctor info
             'first_name' => [
-                'required', 'string', 'regex:/^\S*$/u', 'alpha',
+                'sometimes', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             'last_name' => [
-                'required', 'string', 'regex:/^\S*$/u', 'alpha',
+                'sometimes', 'string', 'regex:/^\S*$/u', 'alpha',
             ],
             'phone_number' => [
                 'nullable', 'numeric',  Rule::unique('doctors')->ignore($this->doctor->id),
@@ -40,7 +40,7 @@ class UpdateDoctorRequest extends FormRequest
                 'sometimes', 'nullable', 'boolean',
             ],
             // 'password' => [
-            //     'required', 'min:8', 'confirmed',
+            //     'sometimes', 'min:8', 'confirmed',
             // ],
             'country' => [
                 'sometimes', 'string',
