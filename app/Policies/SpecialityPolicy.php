@@ -39,6 +39,7 @@ class SpecialityPolicy
     public function update(User $user, Speciality $speciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_SPECIALITY)->exists();
     }
 
     /**
@@ -47,6 +48,7 @@ class SpecialityPolicy
     public function delete(User $user, Speciality $speciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_SPECIALITY)->exists();
     }
 
     /**
@@ -55,6 +57,7 @@ class SpecialityPolicy
     public function restore(User $user, Speciality $speciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_SPECIALITY)->exists();
     }
 
     /**

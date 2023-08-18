@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Speciality;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\FilteringService;
 use App\Http\Requests\Api\V1\AdminRequests\StoreSpecialityRequest;
@@ -49,10 +50,14 @@ class SpecialityController extends Controller
     public function store(StoreSpecialityRequest $request)
     {
         //
-        $speciality = Speciality::create($request->validated());
+        $var = DB::transaction(function () use($request) {
+            $speciality = Speciality::create($request->validated());
 
-        // for the admin if the admin wants we can return only the speciality   or the hospitals and doctors that have this speciality 
-        return SpecialityResource::make($speciality);
+            // for the admin if the admin wants we can return only the speciality   or the hospitals and doctors that have this speciality 
+            return SpecialityResource::make($speciality);
+        });
+        
+        return $var;
     }
 
     /**
@@ -71,6 +76,13 @@ class SpecialityController extends Controller
     public function update(UpdateSpecialityRequest $request, Speciality $speciality)
     {
         //
+        $var = DB::transaction(function () use($request, $speciality) {
+            $speciality->update($request->validated());
+
+            return SpecialityResource::make($speciality);
+        });
+        
+        return $var;
     }
 
     /**

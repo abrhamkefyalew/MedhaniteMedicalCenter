@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use App\Models\EquipmentType;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreEquipmentTypeRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreEquipmentTypeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('create', EquipmentType::class);
     }
 
     /**

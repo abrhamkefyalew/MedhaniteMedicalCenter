@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\EquipmentHospital;
 use App\Models\User;
+use App\Models\Permission;
+use App\Models\EquipmentHospital;
 use Illuminate\Auth\Access\Response;
 
 class EquipmentHospitalPolicy
@@ -14,6 +15,7 @@ class EquipmentHospitalPolicy
     public function viewAny(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**
@@ -22,6 +24,7 @@ class EquipmentHospitalPolicy
     public function view(User $user, EquipmentHospital $equipmentHospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**
@@ -30,6 +33,7 @@ class EquipmentHospitalPolicy
     public function create(User $user): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**
@@ -38,6 +42,7 @@ class EquipmentHospitalPolicy
     public function update(User $user, EquipmentHospital $equipmentHospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**
@@ -46,6 +51,7 @@ class EquipmentHospitalPolicy
     public function delete(User $user, EquipmentHospital $equipmentHospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**
@@ -54,6 +60,7 @@ class EquipmentHospitalPolicy
     public function restore(User $user, EquipmentHospital $equipmentHospital): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_HOSPITAL_EQUIPMENT)->exists();
     }
 
     /**

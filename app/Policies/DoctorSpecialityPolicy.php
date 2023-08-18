@@ -2,8 +2,9 @@
 
 namespace App\Policies;
 
-use App\Models\DoctorSpeciality;
 use App\Models\User;
+use App\Models\Permission;
+use App\Models\DoctorSpeciality;
 use Illuminate\Auth\Access\Response;
 
 class DoctorSpecialityPolicy
@@ -13,7 +14,7 @@ class DoctorSpecialityPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        // return $user->permissions()->where('permissions.title', Permission::INDEX_DOCTOR_SPECIALITY)->exists();
     }
 
     /**

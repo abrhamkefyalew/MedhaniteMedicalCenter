@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSpecialityRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdateSpecialityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', $this->speciality);
     }
 
     /**
@@ -23,6 +24,12 @@ class UpdateSpecialityRequest extends FormRequest
     {
         return [
             //
+            'speciality_name' => [
+                'sometimes', 
+                'string', 
+                Rule::unique('specialities')->ignore($this->speciality->id),
+            ],
+            'speciality_description' => ['sometimes', 'string'],
         ];
     }
 }

@@ -15,6 +15,29 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             [
+                'title' => Permission::INDEX_ADMIN,
+            ],
+            [
+                'title' => Permission::SHOW_ADMIN,
+            ],
+            [
+                'title' => Permission::CREATE_ADMIN,
+            ],
+            [
+                'title' => Permission::EDIT_ADMIN,
+            ],
+            [
+                'title' => Permission::DELETE_ADMIN,
+            ],
+            [
+                'title' => Permission::RESTORE_ADMIN,
+            ],
+            
+
+
+
+            
+            [
                 'title' => Permission::INDEX_ROLE,
             ],
             [
@@ -32,11 +55,18 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_ROLE,
             ],
+
+
             [
                 'title' => Permission::INDEX_PERMISSION,
             ],
             [
                 'title' => Permission::SHOW_PERMISSION,
+            ],
+
+
+            [
+                'title' => Permission::SYNC_PERMISSION_ROLE,
             ],
             [
                 'title' => Permission::INDEX_PERMISSION_ROLE,
@@ -56,23 +86,10 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_PERMISSION_ROLE,
             ],
+
+            
             [
-                'title' => Permission::INDEX_ADMIN,
-            ],
-            [
-                'title' => Permission::SHOW_ADMIN,
-            ],
-            [
-                'title' => Permission::CREATE_ADMIN,
-            ],
-            [
-                'title' => Permission::EDIT_ADMIN,
-            ],
-            [
-                'title' => Permission::DELETE_ADMIN,
-            ],
-            [
-                'title' => Permission::RESTORE_ADMIN,
+                'title' => Permission::SYNC_ROLE_ADMIN,
             ],
             [
                 'title' => Permission::INDEX_ROLE_ADMIN,
@@ -92,6 +109,11 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_ROLE_ADMIN,
             ],
+
+
+
+
+            
             [
                 'title' => Permission::INDEX_HOSPITAL,
             ],
@@ -110,6 +132,56 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_HOSPITAL,
             ],
+
+
+
+
+            
+            [
+                'title' => Permission::INDEX_HOSPITAL_STAFF,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_STAFF,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_STAFF,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_STAFF,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_STAFF,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_STAFF,
+            ],
+
+
+
+
+            
+            [
+                'title' => Permission::INDEX_DOCTOR,
+            ],
+            [
+                'title' => Permission::SHOW_DOCTOR,
+            ],
+            [
+                'title' => Permission::CREATE_DOCTOR,
+            ],
+            [
+                'title' => Permission::EDIT_DOCTOR,
+            ],
+            [
+                'title' => Permission::DELETE_DOCTOR,
+            ],
+            [
+                'title' => Permission::RESTORE_DOCTOR,
+            ],
+
+
+
+            
             [
                 'title' => Permission::INDEX_HOSPITAL_ROLE,
             ],
@@ -127,6 +199,82 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'title' => Permission::RESTORE_HOSPITAL_ROLE,
+            ],
+
+
+            [
+                'title' => Permission::SYNC_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::INDEX_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_STAFF_HOSPITAL_ROLE,
+            ],
+
+
+
+
+
+            [
+                'title' => Permission::SYNC_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::INDEX_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_DOCTOR,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_DOCTOR,
+            ],
+
+
+
+
+            [
+                'title' => Permission::INDEX_SPECIALITY,
+            ],
+            [
+                'title' => Permission::SHOW_SPECIALITY,
+            ],
+            [
+                'title' => Permission::CREATE_SPECIALITY,
+            ],
+            [
+                'title' => Permission::EDIT_SPECIALITY,
+            ],
+            [
+                'title' => Permission::DELETE_SPECIALITY,
+            ],
+            [
+                'title' => Permission::RESTORE_SPECIALITY,
+            ],
+
+
+            [
+                'title' => Permission::SYNC_HOSPITAL_SPECIALITY,
             ],
             [
                 'title' => Permission::INDEX_HOSPITAL_SPECIALITY,
@@ -146,60 +294,34 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_HOSPITAL_SPECIALITY,
             ],
+
+
             [
-                'title' => Permission::INDEX_SPECIALITY,
+                'title' => Permission::SYNC_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::SHOW_SPECIALITY,
+                'title' => Permission::INDEX_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::CREATE_SPECIALITY,
+                'title' => Permission::SHOW_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::EDIT_SPECIALITY,
+                'title' => Permission::CREATE_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::DELETE_SPECIALITY,
+                'title' => Permission::EDIT_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::RESTORE_SPECIALITY,
+                'title' => Permission::DELETE_DOCTOR_SPECIALITY,
             ],
             [
-                'title' => Permission::INDEX_HOSPITAL_STAFF,
+                'title' => Permission::RESTORE_DOCTOR_SPECIALITY,
             ],
-            [
-                'title' => Permission::SHOW_HOSPITAL_STAFF,
-            ],
-            [
-                'title' => Permission::CREATE_HOSPITAL_STAFF,
-            ],
-            [
-                'title' => Permission::EDIT_HOSPITAL_STAFF,
-            ],
-            [
-                'title' => Permission::DELETE_HOSPITAL_STAFF,
-            ],
-            [
-                'title' => Permission::RESTORE_HOSPITAL_STAFF,
-            ],
-            [
-                'title' => Permission::INDEX_DOCTOR,
-            ],
-            [
-                'title' => Permission::SHOW_DOCTOR,
-            ],
-            [
-                'title' => Permission::CREATE_DOCTOR,
-            ],
-            [
-                'title' => Permission::EDIT_DOCTOR,
-            ],
-            [
-                'title' => Permission::DELETE_DOCTOR,
-            ],
-            [
-                'title' => Permission::RESTORE_DOCTOR,
-            ],
+            
+            
+
+
+
             [
                 'title' => Permission::INDEX_EQUIPMENT_TYPE,
             ],
@@ -218,6 +340,11 @@ class PermissionSeeder extends Seeder
             [
                 'title' => Permission::RESTORE_EQUIPMENT_TYPE,
             ],
+
+
+            
+            
+
             [
                 'title' => Permission::INDEX_EQUIPMENT,
             ],
@@ -235,6 +362,29 @@ class PermissionSeeder extends Seeder
             ],
             [
                 'title' => Permission::RESTORE_EQUIPMENT,
+            ],
+
+
+            [
+                'title' => Permission::SYNC_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::INDEX_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::SHOW_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::CREATE_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::EDIT_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::DELETE_HOSPITAL_EQUIPMENT,
+            ],
+            [
+                'title' => Permission::RESTORE_HOSPITAL_EQUIPMENT,
             ],
         ];
         
