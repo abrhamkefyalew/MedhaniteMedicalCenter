@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api\V1\AdminRequests;
 
+use App\Models\DoctorSpeciality;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SyncDoctorSpecialityRequest extends FormRequest
@@ -11,7 +12,7 @@ class SyncDoctorSpecialityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('sync', DoctorSpeciality::class);
     }
 
     /**

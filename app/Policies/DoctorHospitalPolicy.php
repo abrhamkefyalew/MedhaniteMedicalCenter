@@ -2,18 +2,28 @@
 
 namespace App\Policies;
 
-use App\Models\DoctorHospital;
 use App\Models\User;
+use App\Models\Permission;
+use App\Models\DoctorHospital;
 use Illuminate\Auth\Access\Response;
 
 class DoctorHospitalPolicy
 {
+
+    /**
+     * Determine whether the user can sync any models.
+     */
+    public function sync(User $user): bool
+    {
+        return $user->permissions()->where('permissions.title', Permission::SYNC_HOSPITAL_DOCTOR)->exists();
+    }
+
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::INDEX_HOSPITAL_DOCTOR)->exists();
     }
 
     /**
@@ -21,7 +31,7 @@ class DoctorHospitalPolicy
      */
     public function view(User $user, DoctorHospital $doctorHospital): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::SHOW_HOSPITAL_DOCTOR)->exists();
     }
 
     /**
@@ -29,7 +39,7 @@ class DoctorHospitalPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::CREATE_HOSPITAL_DOCTOR)->exists();
     }
 
     /**
@@ -37,7 +47,7 @@ class DoctorHospitalPolicy
      */
     public function update(User $user, DoctorHospital $doctorHospital): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_HOSPITAL_DOCTOR)->exists();
     }
 
     /**
@@ -45,7 +55,7 @@ class DoctorHospitalPolicy
      */
     public function delete(User $user, DoctorHospital $doctorHospital): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_HOSPITAL_DOCTOR)->exists();
     }
 
     /**
@@ -53,7 +63,7 @@ class DoctorHospitalPolicy
      */
     public function restore(User $user, DoctorHospital $doctorHospital): bool
     {
-        //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_HOSPITAL_DOCTOR)->exists();
     }
 
     /**

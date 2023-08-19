@@ -9,6 +9,15 @@ use Illuminate\Auth\Access\Response;
 
 class EquipmentHospitalPolicy
 {
+
+    /**
+     * Determine whether the user can sync any models.
+     */
+    public function sync(User $user): bool
+    {
+        return $user->permissions()->where('permissions.title', Permission::SYNC_HOSPITAL_EQUIPMENT)->exists();
+    }
+
     /**
      * Determine whether the user can view any models.
      */

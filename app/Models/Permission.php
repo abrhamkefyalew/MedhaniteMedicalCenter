@@ -81,7 +81,7 @@ class Permission extends Model
     public const RESTORE_PERMISSION_ROLE = 'RESTORE_PERMISSION_ROLE';
 
 
-    public const SYNC_ROLE_ADMIN = 'SYNC_ROLE_ADMIN';
+    public const SYNC_ROLE_ADMIN = 'SYNC_ROLE_ADMIN'; // you need policy for this // abrham comment
     
     public const INDEX_ROLE_ADMIN = 'INDEX_ROLE_ADMIN';
 
@@ -160,7 +160,7 @@ class Permission extends Model
     public const RESTORE_HOSPITAL_ROLE = 'RESTORE_HOSPITAL_ROLE';
 
 
-    public const SYNC_HOSPITAL_STAFF_HOSPITAL_ROLE = 'SYNC_HOSPITAL_STAFF_HOSPITAL_ROLE';
+    public const SYNC_HOSPITAL_STAFF_HOSPITAL_ROLE = 'SYNC_HOSPITAL_STAFF_HOSPITAL_ROLE'; // you need policy for this // abrham comment
 
     public const INDEX_HOSPITAL_STAFF_HOSPITAL_ROLE = 'INDEX_HOSPITAL_STAFF_HOSPITAL_ROLE';
 
