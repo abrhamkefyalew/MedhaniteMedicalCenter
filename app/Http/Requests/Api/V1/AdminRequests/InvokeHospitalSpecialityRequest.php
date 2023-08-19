@@ -12,7 +12,7 @@ class InvokeHospitalSpecialityRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', HospitalSpeciality::class);
+        return $this->user()->can('sync', HospitalSpeciality::class);
     }
 
     /**

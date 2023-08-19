@@ -9,6 +9,15 @@ use Illuminate\Auth\Access\Response;
 
 class HospitalSpecialityPolicy
 {
+
+    /**
+     * Determine whether the user can sync any models.
+     */
+    public function sync(User $user): bool
+    {
+        return $user->permissions()->where('permissions.title', Permission::SYNC_HOSPITAL_SPECIALITY)->exists();
+    }
+
     /**
      * Determine whether the user can view any models.
      */
@@ -39,6 +48,7 @@ class HospitalSpecialityPolicy
     public function update(User $user, HospitalSpeciality $hospitalSpeciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::EDIT_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**
@@ -47,6 +57,7 @@ class HospitalSpecialityPolicy
     public function delete(User $user, HospitalSpeciality $hospitalSpeciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::DELETE_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**
@@ -55,6 +66,7 @@ class HospitalSpecialityPolicy
     public function restore(User $user, HospitalSpeciality $hospitalSpeciality): bool
     {
         //
+        return $user->permissions()->where('permissions.title', Permission::RESTORE_HOSPITAL_SPECIALITY)->exists();
     }
 
     /**

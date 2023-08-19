@@ -37,7 +37,7 @@ class PermissionRoleSeeder extends Seeder
         $adminPermissions = Permission::all();
 
         $managerPermissions = $adminPermissions->filter(function ($permission) {
-            return substr($permission->title, 0, 5) != 'DELETE' &&
+            return substr($permission->title, 0, 6) != 'DELETE' &&
                    strpos($permission->title, 'RESTORE') === false &&
                    strpos($permission->title, 'ROLE') === false &&
                    strpos($permission->title, 'PERMISSION') === false &&

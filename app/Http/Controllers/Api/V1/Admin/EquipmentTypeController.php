@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use Illuminate\Http\Request;
 use App\Models\EquipmentType;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\FilteringService;
 use App\Http\Requests\Api\V1\AdminRequests\StoreEquipmentTypeRequest;
@@ -38,10 +39,14 @@ class EquipmentTypeController extends Controller
     public function store(StoreEquipmentTypeRequest $request)
     {
         //
-        $equipment = EquipmentType::create($request->validated());
+        $var = DB::transaction(function () use($request) {
+            $equipmentType = EquipmentType::create($request->validated());
 
-        // for the admin if the admin wants we can return only the equipment    or the hospitals that have this equipment 
-        return EquipmentTypeResource::make($equipment);
+            // for the admin if the admin wants we can return only the equipment    or the hospitals that have this equipment 
+            return EquipmentTypeResource::make($equipmentType);
+        });
+
+        return $var;
     }
 
     /**
@@ -50,6 +55,7 @@ class EquipmentTypeController extends Controller
     public function show(EquipmentType $equipmentType)
     {
         //
+        // do auth here
     }
 
     /**
@@ -58,6 +64,13 @@ class EquipmentTypeController extends Controller
     public function update(UpdateEquipmentTypeRequest $request, EquipmentType $equipmentType)
     {
         //
+        $var = DB::transaction(function () use($request, $equipmentType) {
+            $equipmentType->update($request->validated());
+
+            return EquipmentTypeResource::make($equipmentType);
+        });
+
+        return $var;
     }
 
     /**
