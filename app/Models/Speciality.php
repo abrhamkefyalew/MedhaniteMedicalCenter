@@ -38,15 +38,18 @@ class Speciality extends Model
 
     // no job postings in the hospitals yet
 
-    public static function boot() {
+    public static function boot() 
+    {
         parent::boot();
 
         self::deleting(function (Speciality $speciality) {
             HospitalSpeciality::where('speciality_id', $speciality->id)->delete();
+            DoctorSpeciality::where('speciality_id', $speciality->id)->delete();
         });
 
         self::restored(function (Speciality $speciality){
             HospitalSpeciality::where('speciality_id', $speciality->id)->restore();
+            DoctorSpeciality::where('speciality_id', $speciality->id)->restore();
         }); 
     }
 }

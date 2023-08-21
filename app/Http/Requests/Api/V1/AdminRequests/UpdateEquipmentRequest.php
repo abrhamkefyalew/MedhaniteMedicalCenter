@@ -23,6 +23,9 @@ class UpdateEquipmentRequest extends FormRequest
     {
         return [
             //
+            'equipment_type_id' => 'sometimes|integer|exists:equipment_types,id',
+            'equipment_name' => ['sometimes', 'string', 'unique:equipment,equipment_name' . $this->equipment->id], // ignore this equipment row (with this id) while checking uniqueness
+            'equipment_description' => ['sometimes', 'string'],
         ];
     }
 }

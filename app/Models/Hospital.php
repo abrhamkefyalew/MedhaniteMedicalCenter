@@ -79,4 +79,9 @@ class Hospital extends Model implements HasMedia
     public const NIGD_FIKAD_HOSPITAL_PICTURE = 'NIGD_FIKAD';
     public const TIN_NUMBER_HOSPITAL_PICTURE = 'TIN_NUMBER';
     public const TEINA_TIBEKA_HOSPITAL_PICTURE = 'TEINA_TIBEKA';
+
+
+    // abrham comment
+    // do the boot function here when hospital is deleted,  so that the doctor relation in doctor_hospitals table shall be deleted
+
 }

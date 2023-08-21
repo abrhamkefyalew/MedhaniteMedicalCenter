@@ -109,4 +109,11 @@ class Doctor extends Authenticatable implements HasMedia
     // constants
     public const PROFILE_PICTURE_DOCTOR_PICTURE = 'PROFILE_PICTURE';
     public const MEDICAL_LICENSE_DOCTOR_PICTURE = 'MEDICAL_LICENSE';
+
+
+
+    // abrham comment
+    // do the boot function here when doctor is deleted,  so that the hospital relation in doctor_hospitals table shall be deleted
+
+    
 }
