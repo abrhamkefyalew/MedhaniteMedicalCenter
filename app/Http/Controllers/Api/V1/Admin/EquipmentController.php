@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Models\Equipment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Services\Api\V1\FilteringService;
 use App\Http\Requests\Api\V1\AdminRequests\StoreEquipmentRequest;
@@ -58,6 +59,11 @@ class EquipmentController extends Controller
     public function update(UpdateEquipmentRequest $request, Equipment $equipment)
     {
         //
+        DB::transaction(function () use($request, $equipment) {
+            $equipment->update($request->validated());
+
+            return EquipmentResource::make($equipment);
+        });
     }
 
     /**

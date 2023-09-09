@@ -22,6 +22,12 @@ class DoctorController extends Controller
             DoctorFilteringService::byDoctorName($request, $doctor);
         }
 
+        if ($request->has('full')){
+            $doctorDataFull = $doctor->with('media', 'specialities', 'hospitals', 'address')->latest()->paginate(FilteringService::getPaginate($request));
+
+            return DoctorForCustomersResource::collection($doctorDataFull);
+        }
+        
         $doctorData = $doctor->with('media', 'specialities')->latest()->paginate(FilteringService::getPaginate($request));
 
         return DoctorForCustomersResource::collection($doctorData);

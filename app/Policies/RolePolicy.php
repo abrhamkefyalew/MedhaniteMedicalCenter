@@ -3,7 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Role;
-use App\Models\User;
+use App\Models\Admin as User;
 use Illuminate\Auth\Access\Response;
 
 class RolePolicy

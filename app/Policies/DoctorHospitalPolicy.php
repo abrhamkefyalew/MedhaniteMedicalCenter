@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\User;
+use App\Models\Admin as User;
 use App\Models\Permission;
 use App\Models\DoctorHospital;
 use Illuminate\Auth\Access\Response;

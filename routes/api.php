@@ -101,6 +101,7 @@ Route::prefix('v1')->group(function () {
                     Route::get('/', [SpecialityController::class, 'show']);
                     Route::put('/', [SpecialityController::class, 'update']);
                     Route::delete('/', [SpecialityController::class, 'destroy']);
+                    Route::post('/restore', [SpecialityController::class, 'restore']);
                 }); 
             });
 

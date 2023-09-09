@@ -41,5 +41,17 @@ class Equipment extends Model
     }
 
     // do the boot function here when equipment is deleted
+    public static function boot()
+    {
+        parent::boot();
+
+        self::deleting(function (Equipment $equipment) {
+            EquipmentHospital::where('equipment_id', $equipment->id)->delete();
+        });
+
+        self::restored(function (Equipment $equipment) {
+            EquipmentHospital::where('equipment_id', $equipment->id)->restore();
+        });
+    }
 
 }

@@ -91,5 +91,30 @@ class SpecialityController extends Controller
     public function destroy(Speciality $speciality)
     {
         //
+        $this->authorize('delete', $speciality);
+
+        $speciality->delete();
+
+        return response()->json(true);
+    }
+
+    /**
+     * Restore the specified resource from storage
+     */
+    public function restore($id)
+    {
+        // if ($speciality = Speciality::where('id', $id)->withTrashed()){
+            // works also
+        // }
+
+        if ($speciality = Speciality::withTrashed()->find($id)){
+            $this->authorize('restore', $speciality);
+
+            $speciality->restore();
+
+            return response()->json(true, 200);
+        }
+
+        abort(404);
     }
 }
