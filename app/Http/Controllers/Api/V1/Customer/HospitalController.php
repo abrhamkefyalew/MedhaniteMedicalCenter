@@ -23,6 +23,12 @@ class HospitalController extends Controller
             HospitalFilteringService::byHospitalNameAndDescription($request, $hospital);
         }
 
+        if ($request->has('full')){
+            $hospitalDataFull = $hospital->with('media', 'specialities', 'address', 'doctors', 'equipments')->latest()->paginate(FilteringService::getPaginate($request));
+
+            return HospitalForCustomersResource::collection($hospitalDataFull);
+        }
+
         $hospitalData = $hospital->with('media', 'specialities', 'address')->latest()->paginate(FilteringService::getPaginate($request));
 
         return HospitalForCustomersResource::collection($hospitalData);
