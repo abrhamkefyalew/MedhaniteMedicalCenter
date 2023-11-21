@@ -16,6 +16,9 @@ use App\Http\Controllers\Api\V1\Admin\EquipmentHospitalController;
 use App\Http\Controllers\Api\V1\Admin\HospitalSpecialityController;
 use App\Http\Controllers\Api\V1\Auth\AdminAuth\AdminAuthController;
 use App\Http\Controllers\Api\V1\Auth\CustomerAuth\CustomerAuthController;
+use App\Http\Controllers\Api\V1\Auth\HospitalWorkerAuth\HospitalWorkerAuthController;
+use App\Http\Controllers\Api\V1\HospitalWorker\HospitalWorkerController as HospitalsHospitalWorkerController;
+use App\Http\Controllers\Api\V1\HospitalWorker\HospitalAdminHospitalWorkerController as HospitalsHospitalAdminHospitalWorkerController;
 use App\Http\Controllers\Api\V1\Customer\DoctorController as CustomerDoctorController;
 use App\Http\Controllers\Api\V1\Customer\HospitalController as CustomerHospitalController;
 
@@ -197,8 +200,48 @@ Route::prefix('v1')->group(function () {
     
 
 
-    // hospital workers route
+    // hospital workers route (For Hospitals)
+    Route::prefix('hospital_worker')->group(function () {
 
+        Route::prefix('')->group(function () {
+            // there should NOT be hospitalWorker registration, -  
+            // hospitalWorker should be stored by an already existing hospitalWorker admin or super admin of the system -
+            // there should be a route for hospitalWorker storing by both hospitalWorker admin and super admin
+            Route::post('/login', [HospitalWorkerAuthController::class, 'login']);
+
+        });
+
+        Route::middleware(['auth:sanctum', 'abilities:access-hospitalWorker'])->group(function () {
+            Route::prefix('')->group(function () {
+                Route::post('/logout', [HospitalWorkerAuthController::class, 'logout']);
+                Route::post('/logout-all-devices', [HospitalWorkerAuthController::class, 'logoutAllDevices']);
+            });
+
+            // Hospital Workers (HOSPITAL_WORKER) controlling their OWN profile
+            Route::prefix('hospital_workers')->group(function () {
+                //Route::post('/', [HospitalWorkerController::class, 'store']);
+                Route::get('/', [HospitalsHospitalWorkerController::class, 'index']);
+                Route::prefix('/{hospitalWorker}')->group(function () {
+                    Route::get('/', [HospitalsHospitalWorkerController::class, 'show']);
+                    //Route::put('/', [HospitalWorkerController::class, 'update']);
+                    //Route::delete('/', [HospitalWorkerController::class, 'destroy']);
+                }); 
+            });
+            
+            // Hospital ADMIN controlling OTHER Hospital Workers profile
+            Route::prefix('hospital_admin_hospital_workers')->group(function () {
+                //Route::post('/', [HospitalsHospitalAdminHospitalWorkerController::class, 'store']);
+                Route::get('/', [HospitalsHospitalAdminHospitalWorkerController::class, 'index']);
+                Route::prefix('/{hospitalWorker}')->group(function () {
+                    Route::get('/', [HospitalsHospitalAdminHospitalWorkerController::class, 'show']);
+                    //Route::put('/', [HospitalsHospitalAdminHospitalWorkerController::class, 'update']);
+                    //Route::delete('/', [HospitalsHospitalAdminHospitalWorkerController::class, 'destroy']);
+                }); 
+            });
+
+            
+        });
+    });
 
 
     // doctors route
