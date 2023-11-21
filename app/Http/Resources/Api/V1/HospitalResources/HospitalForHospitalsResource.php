@@ -6,13 +6,13 @@ use App\Models\Hospital;
 use Illuminate\Http\Request;
 use App\Traits\Api\V1\GetMedia;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\Api\V1\DoctorResources\DoctorResource;
 use App\Http\Resources\Api\V1\AddressResources\AddressResource;
-use App\Http\Resources\Api\V1\EquipmentResources\EquipmentResource;
-use App\Http\Resources\Api\V1\SpecialityResources\SpecialityResource;
-use App\Http\Resources\Api\V1\HospitalWorkerResources\HospitalWorkerResource;
+use App\Http\Resources\Api\V1\DoctorResources\DoctorForHospitalsResource;
+use App\Http\Resources\Api\V1\EquipmentResources\EquipmentForHospitalsResource;
+use App\Http\Resources\Api\V1\SpecialityResources\SpecialityForHospitalsResource;
+use App\Http\Resources\Api\V1\HospitalWorkerResources\HospitalWorkerForHospitalsResource;
 
-class HospitalResource extends JsonResource
+class HospitalForHospitalsResource extends JsonResource
 {
     use GetMedia;
     
@@ -23,7 +23,7 @@ class HospitalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // this resource is ONLY for the super_admin    NOT    for hospital_admin_admin, hospital_admin, other hospital_workers or for customers (normal users) 
+        // this resource is ONLY for the hospital_admin_admin, hospital_admin    NOT    for other hospital_workers or for customers (normal users) 
         return [
             'id' => $this->id,
             'hospital_name' => $this->hospital_name,
@@ -34,7 +34,7 @@ class HospitalResource extends JsonResource
             'hospital_is_approved' => $this->hospital_is_approved,
             'hospital_created_at' => $this->created_at,
             'hospital_updated_at' => $this->updated_at,
-            'hospital_specialities' => SpecialityResource::collection($this->whenLoaded('specialities')),
+            'hospital_specialities' => SpecialityForHospitalsResource::collection($this->whenLoaded('specialities')),
             // 'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments')),
             'hospital_nigd_fikad_image_path' => $this->getOptimizedImagePath(Hospital::NIGD_FIKAD_HOSPITAL_PICTURE), // abrham comment : - IMAGES USE thumbnails for index and optimized for show (also use the plural methods for show and singular methods for index)
             'hospital_tin_number_image_path' => $this->getOptimizedImagePath(Hospital::TIN_NUMBER_HOSPITAL_PICTURE),
@@ -44,14 +44,14 @@ class HospitalResource extends JsonResource
             'hospital_address' => AddressResource::make($this->whenLoaded('address')),
             // abrham comment
             // load list of equipments
-            'hospital_equipments' => EquipmentResource::collection($this->whenLoaded('equipments', function () {
+            'hospital_equipments' => EquipmentForHospitalsResource::collection($this->whenLoaded('equipments', function () {
                 return $this->equipments->load('equipmentType');
             })),
 
-            'hospital_doctors' => DoctorResource::collection($this->whenLoaded('doctors', function () {
+            'hospital_doctors' => DoctorForHospitalsResource::collection($this->whenLoaded('doctors', function () {
                 return $this->doctors->load('address', 'specialities', 'media');
             })),
-            'hospital_workers' => HospitalWorkerResource::collection($this->whenLoaded('hospitalWorkers', function () {
+            'hospital_workers' => HospitalWorkerForHospitalsResource::collection($this->whenLoaded('hospitalWorkers', function () {
                 return $this->hospitalWorkers->load('address', 'hospitalRoles', 'media');
             })),
         ];

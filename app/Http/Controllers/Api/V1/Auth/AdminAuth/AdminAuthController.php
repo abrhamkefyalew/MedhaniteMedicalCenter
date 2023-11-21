@@ -18,13 +18,19 @@ class AdminAuthController extends Controller
         // better use load than with, since here after all we get the data , we are checking if the password does match, 
         // if password does not match all the data and relation and Eager Load is wasted and the data will NOT be returned
         // do first get only the admin and if the password matches then get the other relations using load()
-        $admin = Admin::with(['permissions', 'address', 'roles', 'media'])->where('email', $request->email)->first(); 
+        $admin = Admin::with(['permissions', 'address', 'roles', 'media'])->where('email', $request->email)->where('is_active', 1)->first();  // only if is_active = 1 he can login
 
         // request()->request->add(['admin-permission-groups' => true]);
 
         if ($admin) {
             if (Hash::check($request->password, $admin->password)) {
+
                 $tokenResult = $admin->createToken('Personal Access Token', ['access-admin']);
+                $expiresAt = now()->addMinutes(20); // Set the expiration time to 20 minutes from now - -   -   -   -   now() = is helper function of laravel, - - - (it is NOT Carbon's)
+                $token = $tokenResult->accessToken;
+                $token->expires_at = $expiresAt;
+                $token->save();
+                
                 //$admin->sendEmailVerificationNotification();
 
                 return response()->json(

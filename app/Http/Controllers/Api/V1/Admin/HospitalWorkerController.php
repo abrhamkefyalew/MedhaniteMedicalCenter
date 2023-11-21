@@ -21,9 +21,9 @@ class HospitalWorkerController extends Controller
     {
         $this->authorize('viewAny', HospitalWorker::class);
 
-        $doctors = HospitalWorker::with('media', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
+        $hospitalWorker = HospitalWorker::with('media', 'hospital')->latest()->paginate(FilteringService::getPaginate($request));
  
-        return HospitalWorkerResource::collection($doctors);
+        return HospitalWorkerResource::collection($hospitalWorker);
 
     }
 

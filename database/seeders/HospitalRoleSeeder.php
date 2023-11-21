@@ -23,6 +23,10 @@ class HospitalRoleSeeder extends Seeder
                 'hospital_role_title' => HospitalRole::HOSPITAL_ADMIN_ROLE,
                 'is_system_created' => true,
             ],
+            [
+                'hospital_role_title' => HospitalRole::HOSPITAL_WORKER_ROLE,
+                'is_system_created' => true,
+            ],
         ];
 
         HospitalRole::upsert($hospitalRoles, ['hospital_role_title']);
