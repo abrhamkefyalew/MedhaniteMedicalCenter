@@ -61,7 +61,7 @@ class CustomerAuthController extends Controller
             // the customer can have only one token at a time in the database
             $customer->tokens()->delete();     // delete all other tokens of this customer
 
-            // Generate a new token for the user with the access-client ability
+            // Generate a new token for the user with the access-customer ability
             $tokenResult = $customer->createToken('Personal Access Token', ['access-customer']);
             // $newJwtToken = $tokenResult->plainTextToken; //
 
