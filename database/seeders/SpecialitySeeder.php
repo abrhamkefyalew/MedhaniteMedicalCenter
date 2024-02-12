@@ -13,6 +13,6 @@ class SpecialitySeeder extends Seeder
      */
     public function run(): void
     {
-        Speciality::factory()->count(1000)->create();
+        // Speciality::factory()->count(1000)->create();
     }
 }
