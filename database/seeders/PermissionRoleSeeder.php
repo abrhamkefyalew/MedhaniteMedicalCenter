@@ -14,26 +14,7 @@ class PermissionRoleSeeder extends Seeder
      */
     public function run(): void
     {
-        //
-        // [
-        //     'title' => Permission::INDEX_abcd,
-        // ],
-        // [
-        //     'title' => Permission::SHOW_abcd,
-        // ],
-        // [
-        //     'title' => Permission::CREATE_abcd,
-        // ],
-        // [
-        //     'title' => Permission::EDIT_abcd,
-        // ],
-        // [
-        //     'title' => Permission::DELETE_abcd,
-        // ],
-        // [
-        //     'title' => Permission::RESTORE_abcd,
-        // ],
-
+        
         $adminPermissions = Permission::all();
 
         $managerPermissions = $adminPermissions->filter(function ($permission) {

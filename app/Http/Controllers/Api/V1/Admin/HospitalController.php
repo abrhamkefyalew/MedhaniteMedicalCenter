@@ -228,28 +228,28 @@ class HospitalController extends Controller
             // Then UPLOAD The IMAGES
             if ($request->has('hospital_nigd_fikad_image')) {
                 $file = $request->file('hospital_nigd_fikad_image');
-                $clearMedia = false; // or true // // NO hospital image remove, since it is the first time the hospital is being stored
+                $clearMedia = false; // or true // // NO hospital image remove, SINCE WE ARE DECIDING THE REMOVING OF IMAGES IN THE ABOVE IF conditions
                 $collectionName = Hospital::NIGD_FIKAD_HOSPITAL_PICTURE;
                 MediaService::storeImage($hospital, $file, $clearMedia, $collectionName);
             }
 
             if ($request->has('hospital_tin_number_image')) {
                 $file = $request->file('hospital_tin_number_image');
-                $clearMedia = false; // or true // // NO hospital image remove, since it is the first time the hospital is being stored
+                $clearMedia = false; // or true // // NO hospital image remove, SINCE WE ARE DECIDING THE REMOVING OF IMAGES IN THE ABOVE IF conditions
                 $collectionName = Hospital::TIN_NUMBER_HOSPITAL_PICTURE;
                 MediaService::storeImage($hospital, $file, $clearMedia, $collectionName);
             }
 
             if ($request->has('hospital_tiena_tibeka_image')) {
                 $file = $request->file('hospital_tiena_tibeka_image');
-                $clearMedia = false; // or true // // NO hospital image remove, since it is the first time the hospital is being stored 
+                $clearMedia = false; // or true // // NO hospital image remove, SINCE WE ARE DECIDING THE REMOVING OF IMAGES IN THE ABOVE IF conditions
                 $collectionName = Hospital::TEINA_TIBEKA_HOSPITAL_PICTURE;
                 MediaService::storeImage($hospital, $file, $clearMedia, $collectionName);
             }
 
             if ($request->has('hospital_profile_image')) {
                 $file = $request->file('hospital_profile_image');
-                $clearMedia = false; // or true // // NO hospital image remove, since it is the first time the hospital is being stored
+                $clearMedia = false; // or true // // NO hospital image remove, SINCE WE ARE DECIDING THE REMOVING OF IMAGES IN THE ABOVE IF conditions
                 $collectionName = Hospital::PROFILE_PICTURE_HOSPITAL_PICTURE;
                 MediaService::storeImage($hospital, $file, $clearMedia, $collectionName);
             }
