@@ -25,7 +25,7 @@ class UpdateEquipmentTypeRequest extends FormRequest
         return [
             //
             'equipment_type_name' => [
-                'required', 
+                'sometimes', 
                 'string', 
                 Rule::unique('equipment_types')->ignore($this->equipmentType->id),
             ],

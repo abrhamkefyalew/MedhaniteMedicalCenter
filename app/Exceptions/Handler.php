@@ -31,7 +31,7 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (ValidationException $e, $request) {
-            if ($request->is('api/v1/talent/*')) {
+            if ($request->is('api/v1/*')) {
                 Log::alert('Validation exception occurred! Url: ' . $request->url() . ' ' . $e->getMessage(), $e->errors());
                 return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], 422);
             }
@@ -39,7 +39,7 @@ class Handler extends ExceptionHandler
 
         $this->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->is('api/*')) {
-            return response()->json(['message' => 'Record not found or route not found!', /*'ERROR' => $e->getMessage()*/], 404);
+                return response()->json(['message' => 'Record not found or route not found!', /*'ERROR' => $e->getMessage()*/], 404);
             }
         });
     }

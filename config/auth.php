@@ -40,8 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // this is because i did not replace the laravel default User Model by my own Admin Model. i added my new Admin Model. 
+        // so i need to add this admin guard
         'admin' => [
-            'provider' => 'admin',
+            'provider' => 'admins',
         ],
     ],
 
@@ -68,7 +71,7 @@ return [
             'model' => App\Models\User::class,
         ],
         
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
